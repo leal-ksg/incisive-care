@@ -1,0 +1,11 @@
+{
+  "name": "incisive-care",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/leal-ksg/incisive-care.git",
+  "author": "Kauã Leal <kauagsilvaleal@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "yup": "^1.6.1"
+  }
+}
