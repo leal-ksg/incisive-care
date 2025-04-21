@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import Service from "../models/service";
+import Patient from "../models/patient";
 
-export const serviceController = {
+export const patientController = {
   async findAll(req: Request, res: Response): Promise<any> {
     try {
-      const services = await Service.find({});
-      if (!services) return res.status(204).send();
+      const patients = await Patient.find({});
+      if (!patients) return res.status(204).send();
 
-      return res.json(services);
+      return res.json(patients);
     } catch (err) {
       return res
         .status(500)
-        .send({ error: `An error occurred on fetching services: ${err}` });
+        .send({ error: `An error occurred on fetching patients: ${err}` });
     }
   },
 
@@ -21,25 +21,25 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: "Provide an ID to be found" });
 
-      const service = await Service.findById(id);
-      if (!service) return res.status(204).send();
+      const patient = await Patient.findById(id);
+      if (!patient) return res.status(204).send();
 
-      return res.json(service);
+      return res.json(patient);
     } catch (err) {
       return res
         .status(500)
-        .send({ error: `An error occurred on finding a service: ${err}` });
+        .send({ error: `An error occurred on finding a patient: ${err}` });
     }
   },
 
   async create(req: Request, res: Response): Promise<any> {
     try {
-      const service = await Service.create(req.body);
-      return res.json(service);
+      const patient = await Patient.create(req.body);
+      return res.json(patient);
     } catch (err) {
       return res
         .status(500)
-        .send({ error: `An error occurred on creating a service: ${err}` });
+        .send({ error: `An error occurred on registering a patient: ${err}` });
     }
   },
 
@@ -49,7 +49,7 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: "Provide an ID for the update" });
 
-      await Service.updateOne(
+      await Patient.updateOne(
         {
           _id: id,
         },
@@ -57,10 +57,10 @@ export const serviceController = {
         { strict: true }
       );
 
-      return res.status(200).send({});
+      return res.status(200).send();
     } catch (err) {
       return res.status(500).send({
-        error: `An error occurred on updating the service: ${err}`,
+        error: `An error occurred on updating the patient info: ${err}`,
       });
     }
   },
@@ -71,14 +71,14 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: "Provide the ID to be deleted" });
 
-      await Service.deleteOne({
+      await Patient.deleteOne({
         _id: id,
       });
 
-      return res.status(200).send({});
+      return res.status(200).send();
     } catch (err) {
       return res.status(500).send({
-        error: `An error occurred on deleting the service: ${err}`,
+        error: `An error occurred on deleting the patient: ${err}`,
       });
     }
   },

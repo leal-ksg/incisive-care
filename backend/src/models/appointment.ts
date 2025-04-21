@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
-import { serviceSchema } from "./service";
 
 export const appointmentSchema = new mongoose.Schema(
   {
-    patientCPF: {
-      type: String,
+    patientId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient",
       required: true,
     },
-    dentistLicense: {
-      type: String,
+    dentistId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Dentist",
       required: true,
     },
     date: { type: Date, required: true },
@@ -22,6 +23,7 @@ export const appointmentSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Service",
+        required: true,
       },
     ],
   },

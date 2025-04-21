@@ -1,17 +1,9 @@
 import * as Yup from "yup";
-import { createServiceSchema } from "../service/createServiceSchema";
+import { createServiceSchema } from "../service/create-service-schema";
 
 export const createAppointmentSchema = Yup.object().shape({
-  patientCPF: Yup.string()
-    .required("Enter the CPF")
-    .test("validate CPF", "Enter a valid CPF", (cpf) => {
-      return /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(cpf);
-    }),
-  dentistLicense: Yup.string()
-    .required("Enter the CPF")
-    .test("validateLicense", "Enter a valid license", (license) => {
-      return /^[A-Z]{2}-\d{1,6}$/.test(license);
-    }),
+  patientId: Yup.string().required("Enter the patient ID"),
+  dentistId: Yup.string().required("Enter the dentist ID"),
   date: Yup.date()
     .required("Enter the appointment date")
     .test(
@@ -27,5 +19,5 @@ export const createAppointmentSchema = Yup.object().shape({
   services: Yup.array()
     .of(Yup.string().required("Select a service"))
     .min(1, "Include at least one service")
-    .required("Include at least one services"),
+    .required("Include at least one service"),
 });
