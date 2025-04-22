@@ -13,6 +13,7 @@ const router = Router();
 
 // APPOINTMENTS
 router.get("/appointments", appointmentController.findAll);
+router.get("/appointments/count", appointmentController.getAppointmentsCount);
 router.get("/appointments/:id", appointmentController.findOne);
 router.post(
   "/appointments",

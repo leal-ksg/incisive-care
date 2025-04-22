@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 export const appointmentSchema = new mongoose.Schema(
   {
-    patientId: {
+    patient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
       required: true,
     },
-    dentistId: {
+    dentist: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Dentist",
       required: true,

@@ -2,8 +2,8 @@ import * as Yup from "yup";
 import { createServiceSchema } from "../service/create-service-schema";
 
 export const createAppointmentSchema = Yup.object().shape({
-  patientId: Yup.string().required("Enter the patient ID"),
-  dentistId: Yup.string().required("Enter the dentist ID"),
+  patient: Yup.string().required("Enter the patient ID"),
+  dentist: Yup.string().required("Enter the dentist ID"),
   date: Yup.date()
     .required("Enter the appointment date")
     .test(

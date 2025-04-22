@@ -4,7 +4,11 @@ import Appointment from "../models/appointment";
 export const appointmentController = {
   async findAll(req: Request, res: Response): Promise<any> {
     try {
-      const appointments = await Appointment.find({});
+      const appointments = await Appointment.find().populate([
+        "services",
+        "patient",
+        "dentist",
+      ]);
       if (!appointments) return res.status(204).send();
 
       return res.json(appointments);
@@ -21,20 +25,40 @@ export const appointmentController = {
       if (!id)
         return res.status(400).send({ error: "Provide an ID to be found" });
 
-      const appointment = await Appointment.findById(id);
+      const appointment = await Appointment.findById(id).populate(["services"]);
       if (!appointment) return res.status(204).send();
 
       return res.json(appointment);
     } catch (err) {
       return res
         .status(500)
-        .send({ error: `An error occurred on finding appointments: ${err}` });
+        .send({ error: `An error occurred on finding an appointment: ${err}` });
+    }
+  },
+
+  async getAppointmentsCount(req: Request, res: Response): Promise<any> {
+    try {
+      const count = await Appointment.aggregate([
+        {
+          $group: {
+            _id: "$status",
+            total: { $sum: 1 },
+          },
+        },
+      ]);
+
+      return res.status(200).json(count);
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ error: `An error occurred on counting appointments: ${err}` });
     }
   },
 
   async create(req: Request, res: Response): Promise<any> {
     // TODO: ensure patient and dentist exists
     try {
+      console.log(req.body);
       const appointment = Appointment.create(req.body);
       return res.json(appointment);
     } catch (err) {
