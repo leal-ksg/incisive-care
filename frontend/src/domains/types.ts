@@ -1,8 +1,7 @@
-export interface AppointmentsDTO {
-  patientId: string;
-  dentistId: string;
+export interface AppointmentDTO {
+  patient: string;
+  dentist: string;
   date: Date;
-  status: string;
   services: string[];
 }
 

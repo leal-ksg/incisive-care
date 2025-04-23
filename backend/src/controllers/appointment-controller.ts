@@ -58,7 +58,6 @@ export const appointmentController = {
   async create(req: Request, res: Response): Promise<any> {
     // TODO: ensure patient and dentist exists
     try {
-      console.log(req.body);
       const appointment = Appointment.create(req.body);
       return res.json(appointment);
     } catch (err) {
@@ -96,8 +95,8 @@ export const appointmentController = {
       if (!id)
         return res.status(400).send({ error: "Provide the ID to be deleted" });
 
-      await Appointment.deleteOne({
-        _id: id,
+      await Appointment.findByIdAndUpdate(id, {
+        status: "CANCELLED",
       });
 
       return res.status(200).send();

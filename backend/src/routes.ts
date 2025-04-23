@@ -47,7 +47,7 @@ router.delete("/dentists/:id", dentistController.delete);
 
 // PATIENTS
 router.get("/patients", patientController.findAll);
-router.get("/patients/:id", patientController.findOne);
+router.get("/patients/:idType/:id", patientController.findOne);
 router.post(
   "/patients",
   (req, res, next) => validateSchema(req, res, next, createPatientSchema),

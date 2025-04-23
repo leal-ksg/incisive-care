@@ -67,6 +67,15 @@ a:hover {
   color: #535bf2;
 }
 
+label {
+  color: rgb(65, 65, 65);
+  font-weight: 600;
+}
+
+input[type="date"], input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(80%) sepia(100%) saturate(500%) hue-rotate(180deg);
+}
+
 html,
 body,
 #root {

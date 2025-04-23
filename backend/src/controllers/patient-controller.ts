@@ -17,14 +17,24 @@ export const patientController = {
 
   async findOne(req: Request, res: Response): Promise<any> {
     try {
-      const { id } = req.params;
+      const { idType, id } = req.params;
+
       if (!id)
         return res.status(400).send({ error: "Provide an ID to be found" });
 
-      const patient = await Patient.findById(id);
-      if (!patient) return res.status(204).send();
+      if (idType === "id") {
+        const patient = await Patient.findById(id);
+        if (!patient) return res.status(204).send();
 
-      return res.json(patient);
+        return res.json(patient);
+      } else if (idType === "cpf") {
+        const patient = await Patient.find({ cpf: id });
+        if (!patient) return res.status(204).send();
+
+        return res.json(patient);
+      } else {
+        return res.status(400).send();
+      }
     } catch (err) {
       return res
         .status(500)

@@ -1,7 +1,7 @@
 import { PageTitle } from "@/components/page-title";
 import Toolbar from "@/components/toolbar";
 import { Appointment } from "@/domains/types";
-import { getAppointments } from "@/services/appointments/getAppointments";
+import { getAppointments } from "@/services/appointments/get-appointments";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -11,11 +11,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pen, PlusCircle, Trash } from "lucide-react";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { deleteAppointment } from "@/services/appointments/delete-appointment";
 
 export const Appointments = () => {
+  const [shouldReload, setShoudReload] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   const navigate = useNavigate();
@@ -24,12 +25,17 @@ export const Appointments = () => {
     const fetchAppointments = async () => {
       const response = await getAppointments();
 
-      console.log(response);
       setAppointments(response);
     };
 
     fetchAppointments();
-  }, []);
+  }, [shouldReload]);
+
+  const handleAppointmentDelete = async (id: string) => {
+    const deleted = await deleteAppointment(id);
+
+    if (deleted) setShoudReload((prev) => !prev);
+  };
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -43,7 +49,7 @@ export const Appointments = () => {
               type="text"
             />
             <button
-              onClick={() => {}}
+              onClick={() => navigate("/appointments/new")}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -103,7 +109,7 @@ export const Appointments = () => {
 
                     <TableCell className="w-[10%] flex items-center justify-start">
                       <button
-                        className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px]  bg-yellow-500 rounded-[6px]"
+                        className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px] transition-colors ease duration-[0.3s]  bg-cyan-300 hover:bg-cyan-200 rounded-[6px]"
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
@@ -113,14 +119,14 @@ export const Appointments = () => {
                           navigate("/appointments/edit");
                         }}
                       >
-                        <Pen strokeWidth={2.4} color="white" />
+                        <FaPen color="white" />
                       </button>
                       <button
-                        className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px]  bg-red-500 rounded-[6px]"
+                        className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px] transition-colors ease duration-[0.3s]  bg-red-400 hover:bg-red-300 rounded-[6px]"
                         type="button"
-                        onClick={() => {}}
+                        onClick={() => handleAppointmentDelete(appointment.id)}
                       >
-                        <Trash strokeWidth={2.4} color="white" />
+                        <FaTrash color="white" />
                       </button>
                     </TableCell>
                   </TableRow>
