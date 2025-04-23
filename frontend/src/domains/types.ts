@@ -42,3 +42,11 @@ export interface AppointmentsCount {
   _id: string;
   total: number;
 }
+
+export interface AppointmentsFormData {
+  patientName: string | null | undefined;
+  service: string | null | undefined;
+  patientCPF: string;
+  dentistId: string;
+  date: Date;
+}

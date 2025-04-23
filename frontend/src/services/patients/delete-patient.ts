@@ -3,11 +3,11 @@ import { api } from "../api";
 import { errorToast, successToast } from "@/lib/toast-styles";
 import { toast } from "sonner";
 
-export const deleteService = async (id: string): Promise<boolean> => {
+export const deletePatient = async (id: string): Promise<boolean> => {
   try {
-    await api.delete(`/services/${id}`);
+    await api.delete(`/patients/${id}`);
 
-    toast("Serviço excluído!", {
+    toast("Paciente excluído!", {
       duration: 3000,
       style: successToast,
     });
@@ -15,7 +15,7 @@ export const deleteService = async (id: string): Promise<boolean> => {
     return true;
   } catch (error) {
     if (isAxiosError(error)) {
-      toast("Não foi possível excluir o serviço...", {
+      toast("Não foi possível excluir o paciente...", {
         duration: 3000,
         style: errorToast,
       });

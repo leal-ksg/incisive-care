@@ -24,18 +24,16 @@ import {
 } from "@/components/ui/table";
 import { FaTrash } from "react-icons/fa";
 import { FaCircleCheck, FaCirclePlus, FaCircleXmark } from "react-icons/fa6";
-import { InferType } from "yup";
 import { getPatientById } from "@/services/patients/get-patient-by-id";
 import { getDentists } from "@/services/dentists/get-dentists";
-import { AppointmentDTO, Dentist, Patient, Service } from "@/domains/types";
+import { AppointmentDTO, AppointmentsFormData, Dentist, Patient, Service } from "@/domains/types";
 import { getServices } from "@/services/services/get-services";
 import { toast } from "sonner";
 import { errorToast } from "@/lib/toast-styles";
 import { createAppointment } from "@/services/appointments/create-appointment";
 import { formatToDatetime } from "@/lib/format-to-datetime";
 import { updateAppointment } from "@/services/appointments/update-appointment";
-
-type AppointmentsFormData = InferType<typeof appointmentSchema>;
+import { InferType } from "yup";
 
 export const AppointmentsMaintenance = () => {
   const [appointmentId, setAppointmentId] = useState<string>();
@@ -46,8 +44,8 @@ export const AppointmentsMaintenance = () => {
 
   const { action } = useParams();
   const { register, handleSubmit, setValue, control, watch } =
-    useForm<AppointmentsFormData>({
-      // resolver: yupResolver(appointmentSchema),
+    useForm<InferType<typeof appointmentSchema>>({
+      resolver: yupResolver(appointmentSchema),
     });
 
   const patientCPF = watch("patientCPF");
