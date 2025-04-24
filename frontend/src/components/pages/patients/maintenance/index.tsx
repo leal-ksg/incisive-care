@@ -19,9 +19,11 @@ export const PatientsMaintenance = () => {
   const [patient, setPatient] = useState<Patient>();
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue } = useForm<PatientFormData>({
-    resolver: yupResolver(createPatientSchema),
-  });
+  const { register, handleSubmit, setValue, formState } =
+    useForm<PatientFormData>({
+      resolver: yupResolver(createPatientSchema),
+    });
+  const { errors } = formState;
 
   useEffect(() => {
     const fillDefaultValues = () => {
@@ -71,7 +73,7 @@ export const PatientsMaintenance = () => {
           className="flex flex-col gap-10 w-[60%] mt-8"
         >
           <div className="flex items-end gap-3 w-full justify-center">
-            <div className="w-1/3">
+            <div className="relative flex flex-col w-1/3">
               <label htmlFor="cpf">CPF</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -83,20 +85,30 @@ export const PatientsMaintenance = () => {
                   },
                 })}
               />
+              {errors.cpf && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.cpf.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-full">
+            <div className="relative flex flex-col w-full">
               <label htmlFor="name">Nome</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
                 {...register("name")}
               />
+              {errors.name && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
           </div>
 
           <div className="flex gap-3">
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="phone">Telefone</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -108,15 +120,25 @@ export const PatientsMaintenance = () => {
                   },
                 })}
               />
+              {errors.phone && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.phone.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="dateOfBirth">Data de nascimento</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="date"
                 {...register("dateOfBirth")}
               />
+              {errors.dateOfBirth && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.dateOfBirth.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">

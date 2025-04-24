@@ -19,9 +19,11 @@ export const DentistsMaintenance = () => {
   const [dentist, setDentist] = useState<Dentist>();
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue } = useForm<DentistFormData>({
-    resolver: yupResolver(createDentistSchema),
-  });
+  const { register, handleSubmit, setValue, formState } =
+    useForm<DentistFormData>({
+      resolver: yupResolver(createDentistSchema),
+    });
+  const { errors } = formState;
 
   useEffect(() => {
     const fillDefaultValues = () => {
@@ -66,7 +68,7 @@ export const DentistsMaintenance = () => {
           className="flex flex-col gap-10 w-[60%] mt-8"
         >
           <div className="flex items-end gap-3 w-full justify-center">
-            <div className="w-1/3">
+            <div className="relative flex flex-col w-1/3">
               <label htmlFor="cpf">CPF</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -78,20 +80,30 @@ export const DentistsMaintenance = () => {
                   },
                 })}
               />
+              {errors.cpf && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.cpf.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-full">
+            <div className="relative flex flex-col w-full">
               <label htmlFor="name">Nome</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
                 {...register("name")}
               />
+              {errors.name && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
           </div>
 
           <div className="flex gap-3">
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="phone">Telefone</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -103,9 +115,14 @@ export const DentistsMaintenance = () => {
                   },
                 })}
               />
+              {errors.phone && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.phone.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="license">Licensa CRO</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -117,6 +134,11 @@ export const DentistsMaintenance = () => {
                   },
                 })}
               />
+              {errors.license && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.license.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">

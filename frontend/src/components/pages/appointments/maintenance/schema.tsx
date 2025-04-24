@@ -9,6 +9,7 @@ export const appointmentSchema = Yup.object().shape({
   patientName: Yup.string().nullable(),
   dentistId: Yup.string().required("Campo obrigatório"),
   date: Yup.date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .required("Campo obrigatório")
     .test(
       "validate date",

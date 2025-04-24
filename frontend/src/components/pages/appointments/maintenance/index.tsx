@@ -26,7 +26,13 @@ import { FaTrash } from "react-icons/fa";
 import { FaCircleCheck, FaCirclePlus, FaCircleXmark } from "react-icons/fa6";
 import { getPatientById } from "@/services/patients/get-patient-by-id";
 import { getDentists } from "@/services/dentists/get-dentists";
-import { AppointmentDTO, AppointmentsFormData, Dentist, Patient, Service } from "@/domains/types";
+import {
+  AppointmentDTO,
+  AppointmentsFormData,
+  Dentist,
+  Patient,
+  Service,
+} from "@/domains/types";
 import { getServices } from "@/services/services/get-services";
 import { toast } from "sonner";
 import { errorToast } from "@/lib/toast-styles";
@@ -43,10 +49,11 @@ export const AppointmentsMaintenance = () => {
   const [selectedServices, setSelectedServices] = useState<Service[]>([]);
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue, control, watch } =
+  const { register, handleSubmit, setValue, control, watch, formState } =
     useForm<InferType<typeof appointmentSchema>>({
       resolver: yupResolver(appointmentSchema),
     });
+  const { errors } = formState;
 
   const patientCPF = watch("patientCPF");
   const serviceId = watch("service");
@@ -163,7 +170,7 @@ export const AppointmentsMaintenance = () => {
       <div className="flex flex-col p-6 items-center w-full h-full">
         <form className="flex flex-col gap-10 w-[60%] mt-8">
           <div className="flex items-end gap-3 w-full justify-center">
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="patientCPF">CPF do paciente</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
@@ -175,6 +182,11 @@ export const AppointmentsMaintenance = () => {
                   },
                 })}
               />
+              {errors.patientCPF && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.patientCPF.message}
+                </span>
+              )}
             </div>
 
             <div className="w-1/2">
@@ -188,7 +200,7 @@ export const AppointmentsMaintenance = () => {
           </div>
 
           <div className="flex gap-3">
-            <div className="w-full">
+            <div className="relative flex flex-col w-full">
               <label htmlFor="dentistId">Dentista</label>
               <Controller
                 name="dentistId"
@@ -218,15 +230,25 @@ export const AppointmentsMaintenance = () => {
                   );
                 }}
               />
+              {errors.dentistId && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.dentistId.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="date">Data / hora</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="datetime-local"
                 {...register("date")}
               />
+              {errors.date && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.date.message}
+                </span>
+              )}
             </div>
           </div>
 

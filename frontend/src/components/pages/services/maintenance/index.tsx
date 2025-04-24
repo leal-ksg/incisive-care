@@ -18,9 +18,11 @@ export const ServicesMaintenance = () => {
   const [service, setService] = useState<Service>();
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue } = useForm<ServiceFormData>({
-    resolver: yupResolver(createServiceSchema),
-  });
+  const { register, handleSubmit, setValue, formState } =
+    useForm<ServiceFormData>({
+      resolver: yupResolver(createServiceSchema),
+    });
+  const { errors } = formState;
 
   useEffect(() => {
     const fillDefaultValues = () => {
@@ -65,42 +67,62 @@ export const ServicesMaintenance = () => {
           className="flex flex-col gap-10 w-[60%] mt-8"
         >
           <div className="flex items-end gap-3 w-full justify-center">
-            <div className="w-1/3">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="description">Descrição</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
                 {...register("description")}
               />
+              {errors.description && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.description.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-full">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="name">Categoria</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
                 {...register("category")}
               />
+              {errors.category && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.category.message}
+                </span>
+              )}
             </div>
           </div>
 
           <div className="flex gap-3">
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="duration">Duração (min)</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
-                type="text"
+                type="number"
                 {...register("duration")}
               />
+              {errors.duration && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.duration.message}
+                </span>
+              )}
             </div>
 
-            <div className="w-1/2">
+            <div className="relative flex flex-col w-1/2">
               <label htmlFor="unitAmount">Valor unitário</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
-                type="text"
+                type="number"
                 {...register("unitAmount")}
               />
+              {errors.unitAmount && (
+                <span className="absolute top-[100%] text-destructive font-semibold">
+                  {errors.unitAmount.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">
