@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/page-title";
 import Toolbar from "@/components/toolbar";
-import { Patient } from "@/domains/types";
+import { Service } from "@/domains/types";
 import { useEffect, useState } from "react";
 import {
   Table,
@@ -12,27 +12,27 @@ import {
 } from "@/components/ui/table";
 import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getPatients } from "@/services/patients/get-patients";
-import { deletePatient } from "@/services/patients/delete-patient";
+import { getServices } from "@/services/services/get-services";
+import { deleteService } from "@/services/services/delete-service";
 
-export const Patients = () => {
+export const Services = () => {
   const [shouldReload, setShoudReload] = useState(false);
-  const [patients, setPatients] = useState<Patient[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchPatients = async () => {
-      const response = await getPatients();
+    const fetchServices = async () => {
+      const response = await getServices();
 
-      setPatients(response);
+      setServices(response);
     };
 
-    fetchPatients();
+    fetchServices();
   }, [shouldReload]);
 
-  const handlePatientDelete = async (id: string) => {
-    const deleted = await deletePatient(id);
+  const handleServiceDelete = async (id: string) => {
+    const deleted = await deleteService(id);
 
     if (deleted) setShoudReload((prev) => !prev);
   };
@@ -40,7 +40,7 @@ export const Patients = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <Toolbar />
-      <PageTitle title="Pacientes" backPath="/" />
+      <PageTitle title="Serviços" backPath="/" />
       <div className="flex p-6 justify-center w-full h-full">
         <div className="flex flex-col relative  rounded-lg w-[70%] mt-20">
           <div className="flex gap-2 justify-center items-center mb-2">
@@ -49,7 +49,7 @@ export const Patients = () => {
               type="text"
             />
             <button
-              onClick={() => navigate("/patients/new")}
+              onClick={() => navigate("/services/new")}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -59,16 +59,16 @@ export const Patients = () => {
             <TableHeader className="bg-[#00AEC7]">
               <TableRow className="hover:bg-transparent">
                 <TableHead className="w-[33.5%] text-white ml-0.5 rounded-tl-2xl font-semibold text-base">
-                  Nome
+                  Descrição
                 </TableHead>
                 <TableHead className="w-[14%] text-white ml-0.5 font-semibold text-base">
-                  CPF
+                  Categoria
                 </TableHead>
                 <TableHead className="w-[20%] text-white ml-0.5 font-semibold text-base">
-                  Data nascimento
+                  Duração (min)
                 </TableHead>
                 <TableHead className="w-[15%] text-white ml-0.5 font-semibold text-base">
-                  Telefone
+                  Valor unitário
                 </TableHead>
                 <TableHead className="w-[10%] text-white rounded-tr-2xl font-semibold text-base" />
               </TableRow>
@@ -78,23 +78,27 @@ export const Patients = () => {
           <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
             <Table className="justify-self-center rounded-t-4">
               <TableBody>
-                {patients.map((patient, index) => (
+                {services?.map((service, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
                       index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
                     }`}
-                    key={patient.id}
+                    key={service.id}
                   >
-                    <TableCell className="w-[36.2%]">{patient?.name}</TableCell>
-                    <TableCell className="w-[15.2%]">{patient?.cpf}</TableCell>
-
-                    <TableCell className="w-[21.5%]">
-                      {new Intl.DateTimeFormat("pt-BR").format(
-                        new Date(patient.dateOfBirth)
-                      )}
+                    <TableCell className="w-[36.2%]">
+                      {service?.description}
+                    </TableCell>
+                    <TableCell className="w-[15.2%]">
+                      {service?.category}
                     </TableCell>
 
-                    <TableCell className="w-[17%]">{patient?.phone}</TableCell>
+                    <TableCell className="w-[21.5%]">
+                      {service.duration}
+                    </TableCell>
+
+                    <TableCell className="w-[17%]">
+                      {service?.unitAmount}
+                    </TableCell>
 
                     <TableCell className="w-[10%] flex items-center justify-start">
                       <button
@@ -102,10 +106,10 @@ export const Patients = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            "selectedPatient",
-                            JSON.stringify(patient)
+                            "selectedService",
+                            JSON.stringify(service)
                           );
-                          navigate("/patients/edit");
+                          navigate("/services/edit");
                         }}
                       >
                         <FaPen color="white" />
@@ -113,7 +117,7 @@ export const Patients = () => {
                       <button
                         className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px] transition-colors ease duration-[0.3s]  bg-red-400 hover:bg-red-300 rounded-[6px]"
                         type="button"
-                        onClick={() => handlePatientDelete(patient.id)}
+                        onClick={() => handleServiceDelete(service.id)}
                       >
                         <FaTrash color="white" />
                       </button>
@@ -123,9 +127,9 @@ export const Patients = () => {
               </TableBody>
             </Table>
           </div>
-          {patients.length === 0 && (
+          {services.length === 0 && (
             <div className="text-gray-800 m-0 p-2 bg-gray-100 font-semibold text-lg text-center">
-              Nenhum paciente cadastrado ainda...
+              Nenhum serviço cadastrado ainda...
             </div>
           )}
         </div>

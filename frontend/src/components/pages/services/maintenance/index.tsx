@@ -3,57 +3,51 @@ import Toolbar from "@/components/toolbar";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useCallback, useEffect, useState } from "react";
-import { formatInput } from "@/lib/format-input";
 
 import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
 import { InferType } from "yup";
-import { Patient } from "@/domains/types";
-import { createPatientSchema } from "../../../../../../common/validation/patient/create-patient-schema";
+import { Service } from "@/domains/types";
+import { createServiceSchema } from "../../../../../../common/validation/service/create-service-schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createPatient } from "@/services/patients/create-patient";
-import { updatePatient } from "@/services/patients/update-patient";
+import { createService } from "@/services/services/create-service";
+import { updateService } from "@/services/services/update-service";
 
-type PatientFormData = InferType<typeof createPatientSchema>;
+type ServiceFormData = InferType<typeof createServiceSchema>;
 
-export const PatientsMaintenance = () => {
-  const [patient, setPatient] = useState<Patient>();
+export const ServicesMaintenance = () => {
+  const [service, setService] = useState<Service>();
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue } = useForm<PatientFormData>({
-    resolver: yupResolver(createPatientSchema),
+  const { register, handleSubmit, setValue } = useForm<ServiceFormData>({
+    resolver: yupResolver(createServiceSchema),
   });
 
   useEffect(() => {
     const fillDefaultValues = () => {
-      const selectedPatient: Patient = JSON.parse(
-        localStorage.getItem("selectedPatient")!
+      const selectedService: Service = JSON.parse(
+        localStorage.getItem("selectedService")!
       );
 
-      setValue(
-        "dateOfBirth",
-        new Date(selectedPatient.dateOfBirth)
-          .toISOString()
-          .split("T")[0] as unknown as Date
-      );
-      setValue("name", selectedPatient.name);
-      setValue("cpf", selectedPatient.cpf);
-      setValue("phone", selectedPatient.phone);
+      setValue("category", selectedService.category);
+      setValue("description", selectedService.description);
+      setValue("duration", selectedService.duration);
+      setValue("unitAmount", selectedService.unitAmount);
 
-      setPatient(selectedPatient);
+      setService(selectedService);
     };
 
     if (action === "edit") fillDefaultValues();
   }, [action, setValue]);
 
   const onSubmit = useCallback(
-    async (data: PatientFormData) => {
+    async (data: ServiceFormData) => {
       if (action === "new") {
-        await createPatient(data);
+        await createService(data);
       } else {
-        await updatePatient({ ...data, id: patient!.id });
+        await updateService({ ...data, id: service!.id });
       }
     },
-    [action, patient]
+    [action, service]
   );
 
   return (
@@ -61,9 +55,9 @@ export const PatientsMaintenance = () => {
       <Toolbar />
       <PageTitle
         title={
-          action === "new" ? "Cadastro de paciente" : "Atualização de paciente"
+          action === "new" ? "Cadastro de serviço" : "Atualização de serviço"
         }
-        backPath="/patients"
+        backPath="/services"
       />
       <div className="flex flex-col p-6 items-center w-full h-full">
         <form
@@ -72,50 +66,40 @@ export const PatientsMaintenance = () => {
         >
           <div className="flex items-end gap-3 w-full justify-center">
             <div className="w-1/3">
-              <label htmlFor="cpf">CPF</label>
+              <label htmlFor="description">Descrição</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("cpf", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "cpf");
-                    setValue("cpf", formattedValue);
-                  },
-                })}
+                {...register("description")}
               />
             </div>
 
             <div className="w-full">
-              <label htmlFor="name">Nome</label>
+              <label htmlFor="name">Categoria</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("name")}
+                {...register("category")}
               />
             </div>
           </div>
 
           <div className="flex gap-3">
             <div className="w-1/2">
-              <label htmlFor="phone">Telefone</label>
+              <label htmlFor="duration">Duração (min)</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("phone", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "phone");
-                    setValue("phone", formattedValue);
-                  },
-                })}
+                {...register("duration")}
               />
             </div>
 
             <div className="w-1/2">
-              <label htmlFor="dateOfBirth">Data de nascimento</label>
+              <label htmlFor="unitAmount">Valor unitário</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
-                type="date"
-                {...register("dateOfBirth")}
+                type="text"
+                {...register("unitAmount")}
               />
             </div>
           </div>

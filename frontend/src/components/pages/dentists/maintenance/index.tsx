@@ -7,48 +7,48 @@ import { formatInput } from "@/lib/format-input";
 
 import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
 import { InferType } from "yup";
-import { Patient } from "@/domains/types";
-import { createPatientSchema } from "../../../../../../common/validation/patient/create-patient-schema";
+import { Dentist } from "@/domains/types";
+import { createDentistSchema } from "../../../../../../common/validation/dentist/create-dentist-schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createPatient } from "@/services/patients/create-patient";
-import { updatePatient } from "@/services/patients/update-patient";
+import { createDentist } from "@/services/dentists/create-dentist";
+import { updateDentist } from "@/services/dentists/update-dentist";
 
-type PatientFormData = InferType<typeof createPatientSchema>;
+type DentistFormData = InferType<typeof createDentistSchema>;
 
-export const PatientsMaintenance = () => {
-  const [patient, setPatient] = useState<Patient>();
+export const DentistsMaintenance = () => {
+  const [dentist, setDentist] = useState<Dentist>();
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue } = useForm<PatientFormData>({
-    resolver: yupResolver(createPatientSchema),
+  const { register, handleSubmit, setValue } = useForm<DentistFormData>({
+    resolver: yupResolver(createDentistSchema),
   });
 
   useEffect(() => {
     const fillDefaultValues = () => {
-      const selectedPatient: Patient = JSON.parse(
-        localStorage.getItem("selectedPatient")!
+      const selectedDentist: Dentist = JSON.parse(
+        localStorage.getItem("selectedDentist")!
       );
 
-      setValue("dateOfBirth", selectedPatient.dateOfBirth);
-      setValue("name", selectedPatient.name);
-      setValue("cpf", selectedPatient.cpf);
-      setValue("phone", selectedPatient.phone);
+      setValue("license", selectedDentist.license);
+      setValue("name", selectedDentist.name);
+      setValue("cpf", selectedDentist.cpf);
+      setValue("phone", selectedDentist.phone);
 
-      setPatient(selectedPatient);
+      setDentist(selectedDentist);
     };
 
     if (action === "edit") fillDefaultValues();
   }, [action, setValue]);
 
   const onSubmit = useCallback(
-    async (data: PatientFormData) => {
+    async (data: DentistFormData) => {
       if (action === "new") {
-        await createPatient(data);
+        await createDentist(data);
       } else {
-        await updatePatient({ ...data, id: patient!.id });
+        await updateDentist({ ...data, id: dentist!.id });
       }
     },
-    [action, patient]
+    [action, dentist]
   );
 
   return (
@@ -56,9 +56,9 @@ export const PatientsMaintenance = () => {
       <Toolbar />
       <PageTitle
         title={
-          action === "new" ? "Cadastro de paciente" : "Atualização de paciente"
+          action === "new" ? "Cadastro de dentista" : "Atualização de dentista"
         }
-        backPath="/patients"
+        backPath="/dentists"
       />
       <div className="flex flex-col p-6 items-center w-full h-full">
         <form
@@ -106,30 +106,34 @@ export const PatientsMaintenance = () => {
             </div>
 
             <div className="w-1/2">
-              <label htmlFor="dateOfBirth">Data de nascimento</label>
+              <label htmlFor="license">Licensa CRO</label>
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
-                type="date"
-                {...register("dateOfBirth")}
+                type="text"
+                {...register("license", {
+                  onChange: (e) => {
+                    const formattedValue = formatInput(e.target.value, "cro");
+                    setValue("license", formattedValue);
+                  },
+                })}
               />
             </div>
           </div>
+          <div className="flex gap-2 fixed bottom-30 right-40">
+            <button
+              className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
+              type="button"
+            >
+              <FaCircleXmark size={20} color="white" />
+            </button>
+            <button
+              className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-green-300 hover:bg-green-200 rounded-[6px]"
+              type="submit"
+            >
+              <FaCircleCheck size={20} color="white" />
+            </button>
+          </div>
         </form>
-
-        <div className="flex gap-2 self-end mt-70 mr-30">
-          <button
-            className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
-            type="button"
-          >
-            <FaCircleXmark size={20} color="white" />
-          </button>
-          <button
-            className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-green-300 hover:bg-green-200 rounded-[6px]"
-            type="submit"
-          >
-            <FaCircleCheck size={20} color="white" />
-          </button>
-        </div>
       </div>
     </div>
   );

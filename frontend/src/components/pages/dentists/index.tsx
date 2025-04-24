@@ -78,31 +78,27 @@ export const Dentists = () => {
           <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
             <Table className="justify-self-center rounded-t-4">
               <TableBody>
-                
+                {dentists?.map((dentist, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      1 % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
                     }`}
-                    key={1}
+                    key={dentist.id}
                   >
                     <TableCell className="w-[36.2%]">
-                      Nome de dentista realmente grande
-                      {/* {dentist?.name} */}
-                      </TableCell>
+                      {dentist?.name}
+                    </TableCell>
                     <TableCell className="w-[15.2%]">
-                      058.364.560-70
-                      {/* {dentist?.cpf} */}
-                      </TableCell>
+                      {dentist?.cpf}
+                    </TableCell>
 
                     <TableCell className="w-[21.5%]">
-                      RS-55555
-                      {/* {dentist.license} */}
+                      {dentist.license}
                     </TableCell>
 
                     <TableCell className="w-[17%]">
-                      (54) 98446-9945
-                      {/* {dentist?.phone} */}
-                      </TableCell>
+                      {dentist?.phone}
+                    </TableCell>
 
                     <TableCell className="w-[10%] flex items-center justify-start">
                       <button
@@ -127,7 +123,7 @@ export const Dentists = () => {
                       </button>
                     </TableCell>
                   </TableRow>
-            
+                ))}
               </TableBody>
             </Table>
           </div>

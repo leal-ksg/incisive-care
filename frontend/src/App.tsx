@@ -5,6 +5,9 @@ import { AppointmentsMaintenance } from "./components/pages/appointments/mainten
 import { Patients } from "./components/pages/patients";
 import { PatientsMaintenance } from "./components/pages/patients/maintenance";
 import { Dentists } from "./components/pages/dentists";
+import { DentistsMaintenance } from "./components/pages/dentists/maintenance";
+import { Services } from "./components/pages/services";
+import { ServicesMaintenance } from "./components/pages/services/maintenance";
 
 function App() {
   return (
@@ -21,12 +24,14 @@ function App() {
       {/* Patients */}
       <Route path="/patients" element={<Patients />} />
       <Route path="/patients/:action" element={<PatientsMaintenance />} />
-      
+
       {/* Dentists */}
       <Route path="/dentists" element={<Dentists />} />
-      {/* <Route path="/dentists/:action" element={<dentistsMaintenance />} /> */}
+      <Route path="/dentists/:action" element={<DentistsMaintenance />} />
 
-  
+      {/* Services */}
+      <Route path="/services" element={<Services />} />
+      <Route path="/services/:action" element={<ServicesMaintenance />} />
     </Routes>
   );
 }

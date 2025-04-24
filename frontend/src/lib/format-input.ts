@@ -20,9 +20,10 @@ export function formatInput(
     }
 
     case "cro": {
-      const cleaned = value.replace(/[^a-zA-Z0-9]/g, "");
-
-      return cleaned.replace(/(\d{5})(\d{0,2})$/, "$1-$2").replace(/-$/, "");
+      const cleaned = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      const letters = cleaned.slice(0, 2);
+      const numbers = cleaned.slice(2, 7);
+      return `${letters}${numbers ? `-${numbers}` : ""}`;
     }
 
     default:
