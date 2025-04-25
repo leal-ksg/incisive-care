@@ -5,6 +5,7 @@ export const createAppointmentSchema = Yup.object().shape({
   patient: Yup.string().required("Informe o paciente"),
   dentist: Yup.string().required("Informe o dentista"),
   date: Yup.date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .required("Informe a data do agendamento")
     .test(
       "date greater than or equal today",

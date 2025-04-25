@@ -9,6 +9,7 @@ export const createPatientSchema = Yup.object().shape({
       return /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/.test(cpf);
     }),
   dateOfBirth: Yup.date()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .required("Informe a data de nascimento do paciente")
     .test(
       "date is earlier than or equal today",
