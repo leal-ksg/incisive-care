@@ -85,7 +85,7 @@ export const AppointmentsMaintenance = () => {
         "date",
         formatToDatetime(selectedAppointment.date) as unknown as Date
       );
-      if (selectedAppointment.dentist.id)
+      if (selectedAppointment.dentist?.id)
         setValue("dentistId", selectedAppointment.dentist.id);
       setValue("patientCPF", selectedAppointment.patient.cpf);
       setValue("patientName", selectedAppointment.patient.name);
@@ -133,7 +133,7 @@ export const AppointmentsMaintenance = () => {
         return;
       }
 
-      if (!patient) {
+      if (!patient || !data.patientName) {
         toast("O paciente não está cadastrado", {
           duration: 3000,
           style: errorToast,

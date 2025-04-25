@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/page-title";
 import Toolbar from "@/components/toolbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useCallback, useEffect, useState } from "react";
 
@@ -23,6 +23,8 @@ export const ServicesMaintenance = () => {
       resolver: yupResolver(createServiceSchema),
     });
   const { errors } = formState;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fillDefaultValues = () => {
@@ -127,6 +129,7 @@ export const ServicesMaintenance = () => {
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">
             <button
+              onClick={() => navigate("/services")}
               className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
               type="button"
             >

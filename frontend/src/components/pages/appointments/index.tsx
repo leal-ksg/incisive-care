@@ -95,7 +95,9 @@ export const Appointments = () => {
                       {appointment?.dentist?.name}
                     </TableCell>
 
-                    <TableCell className="w-[18.7%]"></TableCell>
+                    <TableCell className="w-[18.7%]">
+                      {new Date(appointment.date).toLocaleString("pt-br")}
+                    </TableCell>
 
                     <TableCell className="w-[20%]">
                       {appointment?.services?.reduce((acc, service) => {
