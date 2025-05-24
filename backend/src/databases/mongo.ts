@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const connectDatabase = () => {
+export const connectMongoDB = () => {
   mongoose.connect(process.env.MONGO_CONNECTION_STRING!);
   const db = mongoose.connection;
 
@@ -9,6 +9,6 @@ export const connectDatabase = () => {
   });
 
   db.once("open", () => {
-    console.log("Database successfully connected!");
+    console.log("MongoDB successfully connected!");
   });
 };
