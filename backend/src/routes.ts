@@ -10,63 +10,73 @@ import { createPatientSchema } from '../../common/validation/patient/create-pati
 import { patientController } from './controllers/patient-controller';
 import { userController } from './controllers/user-controller';
 import { createUserSchema } from '../../common/validation/user/create-user-schema';
+import { auth } from './middlewares/auth';
 
 const router = Router();
 
 // APPOINTMENTS
-router.get('/appointments', appointmentController.findAll);
-router.get('/appointments/count', appointmentController.getAppointmentsCount);
-router.get('/appointments/:id', appointmentController.findOne);
+router.get('/appointments', auth, appointmentController.findAll);
+router.get(
+  '/appointments/count',
+  auth,
+  appointmentController.getAppointmentsCount
+);
+router.get('/appointments/:id', auth, appointmentController.findOne);
 router.post(
   '/appointments',
+  auth,
   (req, res, next) => validateSchema(req, res, next, createAppointmentSchema),
   appointmentController.create
 );
-router.put('/appointments/:id', appointmentController.update);
-router.delete('/appointments/:id', appointmentController.delete);
+router.put('/appointments/:id', auth, appointmentController.update);
+router.delete('/appointments/:id', auth, appointmentController.delete);
 
 // SERVICES
-router.get('/services', serviceController.findAll);
-router.get('/services/:id', serviceController.findOne);
+router.get('/services', auth, serviceController.findAll);
+router.get('/services/:id', auth, serviceController.findOne);
 router.post(
   '/services',
+  auth,
   (req, res, next) => validateSchema(req, res, next, createServiceSchema),
   serviceController.create
 );
-router.put('/services/:id', serviceController.update);
-router.delete('/services/:id', serviceController.delete);
+router.put('/services/:id', auth, serviceController.update);
+router.delete('/services/:id', auth, serviceController.delete);
 
 // DENTISTS
-router.get('/dentists', dentistController.findAll);
-router.get('/dentists/:id', dentistController.findOne);
+router.get('/dentists', auth, dentistController.findAll);
+router.get('/dentists/:id', auth, dentistController.findOne);
 router.post(
   '/dentists',
+  auth,
   (req, res, next) => validateSchema(req, res, next, createDentistSchema),
   dentistController.create
 );
-router.put('/dentists/:id', dentistController.update);
-router.delete('/dentists/:id', dentistController.delete);
+router.put('/dentists/:id', auth, dentistController.update);
+router.delete('/dentists/:id', auth, dentistController.delete);
 
 // PATIENTS
-router.get('/patients', patientController.findAll);
-router.get('/patients/:idType/:id', patientController.findOne);
+router.get('/patients', auth, patientController.findAll);
+router.get('/patients/:idType/:id', auth, patientController.findOne);
 router.post(
   '/patients',
+  auth,
   (req, res, next) => validateSchema(req, res, next, createPatientSchema),
   patientController.create
 );
-router.put('/patients/:id', patientController.update);
-router.delete('/patients/:id', patientController.delete);
+router.put('/patients/:id', auth, patientController.update);
+router.delete('/patients/:id', auth, patientController.delete);
 
 // USERS
-router.get('/users', userController.findAll);
-router.get('/users/:id', userController.findOne);
+router.get('/users', auth, userController.findAll);
+router.get('/users/:id', auth, userController.findOne);
+router.post('/users/login', userController.login);
 router.post(
   '/users',
   (req, res, next) => validateSchema(req, res, next, createUserSchema),
   userController.create
 );
-router.put('/users/:id', userController.update);
-router.delete('/users/:id', userController.delete);
+router.put('/users/:id', auth, userController.update);
+router.delete('/users/:id', auth, userController.delete);
 
 export default router;
