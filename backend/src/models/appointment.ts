@@ -1,28 +1,28 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const appointmentSchema = new mongoose.Schema(
   {
     patient: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Patient",
+      ref: 'Patient',
       required: true,
     },
     dentist: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Dentist",
+      ref: 'Dentist',
       required: true,
     },
     date: { type: Date, required: true },
     status: {
       type: String,
-      enum: ["SCHEDULED", "COMPLETED", "CANCELLED"],
-      default: "SCHEDULED",
+      enum: ['SCHEDULED', 'COMPLETED', 'CANCELLED'],
+      default: 'SCHEDULED',
       required: true,
     },
     services: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Service",
+        ref: 'Service',
         required: true,
       },
     ],
@@ -47,4 +47,4 @@ export const appointmentSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Appointment", appointmentSchema);
+export default mongoose.model('Appointment', appointmentSchema);

@@ -1,5 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { ObjectSchema, ValidationError } from "yup";
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NextFunction, Request, Response } from 'express';
+import { ObjectSchema, ValidationError } from 'yup';
 
 export const validateSchema = async (
   req: Request,

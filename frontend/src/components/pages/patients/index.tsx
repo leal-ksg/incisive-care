@@ -1,7 +1,7 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { Patient } from "@/domains/types";
-import { useEffect, useState } from "react";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { Patient } from '@/domains/types';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,11 +9,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { getPatients } from "@/services/patients/get-patients";
-import { deletePatient } from "@/services/patients/delete-patient";
+} from '@/components/ui/table';
+import { FaPlusCircle, FaPen, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { getPatients } from '@/services/patients/get-patients';
+import { deletePatient } from '@/services/patients/delete-patient';
 
 export const Patients = () => {
   const [shouldReload, setShoudReload] = useState(false);
@@ -34,7 +34,7 @@ export const Patients = () => {
   const handlePatientDelete = async (id: string) => {
     const deleted = await deletePatient(id);
 
-    if (deleted) setShoudReload((prev) => !prev);
+    if (deleted) setShoudReload(prev => !prev);
   };
 
   return (
@@ -49,7 +49,7 @@ export const Patients = () => {
               type="text"
             />
             <button
-              onClick={() => navigate("/patients/new")}
+              onClick={() => navigate('/patients/new')}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -81,7 +81,7 @@ export const Patients = () => {
                 {patients.map((patient, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={patient.id}
                   >
@@ -89,7 +89,7 @@ export const Patients = () => {
                     <TableCell className="w-[15.2%]">{patient?.cpf}</TableCell>
 
                     <TableCell className="w-[21.5%]">
-                      {new Intl.DateTimeFormat("pt-BR").format(
+                      {new Intl.DateTimeFormat('pt-BR').format(
                         new Date(patient.dateOfBirth)
                       )}
                     </TableCell>
@@ -102,10 +102,10 @@ export const Patients = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            "selectedPatient",
+                            'selectedPatient',
                             JSON.stringify(patient)
                           );
-                          navigate("/patients/edit");
+                          navigate('/patients/edit');
                         }}
                       >
                         <FaPen color="white" />

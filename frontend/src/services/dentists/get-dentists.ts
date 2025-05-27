@@ -1,6 +1,6 @@
-import { isAxiosError } from "axios";
-import { Dentist } from "../../domains/types";
-import { api } from "../api";
+import { isAxiosError } from 'axios';
+import { Dentist } from '../../domains/types';
+import { api } from '../api';
 
 export const getDentists = async (): Promise<Dentist[]> => {
   try {
@@ -9,6 +9,7 @@ export const getDentists = async (): Promise<Dentist[]> => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
 

@@ -1,13 +1,14 @@
-import { Request, Response } from "express";
-import Appointment from "../models/appointment";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import Appointment from '../models/appointment';
 
 export const appointmentController = {
   async findAll(req: Request, res: Response): Promise<any> {
     try {
       const appointments = await Appointment.find().populate([
-        "services",
-        "patient",
-        "dentist",
+        'services',
+        'patient',
+        'dentist',
       ]);
       if (!appointments) return res.status(204).send();
 
@@ -23,9 +24,9 @@ export const appointmentController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID to be found" });
+        return res.status(400).send({ error: 'Provide an ID to be found' });
 
-      const appointment = await Appointment.findById(id).populate(["services"]);
+      const appointment = await Appointment.findById(id).populate(['services']);
       if (!appointment) return res.status(204).send();
 
       return res.json(appointment);
@@ -41,7 +42,7 @@ export const appointmentController = {
       const count = await Appointment.aggregate([
         {
           $group: {
-            _id: "$status",
+            _id: '$status',
             total: { $sum: 1 },
           },
         },
@@ -71,7 +72,7 @@ export const appointmentController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID for the update" });
+        return res.status(400).send({ error: 'Provide an ID for the update' });
 
       await Appointment.updateOne(
         {
@@ -93,10 +94,10 @@ export const appointmentController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide the ID to be deleted" });
+        return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
       await Appointment.findByIdAndUpdate(id, {
-        status: "CANCELLED",
+        status: 'CANCELLED',
       });
 
       return res.status(200).send();

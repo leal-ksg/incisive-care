@@ -1,8 +1,8 @@
-import { isAxiosError } from "axios";
-import { api } from "../api";
-import { errorToast, successToast } from "@/lib/toast-styles";
-import { toast } from "sonner";
-import { AppointmentDTO } from "@/domains/types";
+import { isAxiosError } from 'axios';
+import { api } from '../api';
+import { errorToast, successToast } from '@/lib/toast-styles';
+import { toast } from 'sonner';
+import { AppointmentDTO } from '@/domains/types';
 
 export const updateAppointment = async (
   id: string,
@@ -11,7 +11,7 @@ export const updateAppointment = async (
   try {
     await api.put(`/appointments/${id}`, appointment);
 
-    toast("Agendamento atualizado!", {
+    toast('Agendamento atualizado!', {
       duration: 3000,
       style: successToast,
     });
@@ -19,7 +19,7 @@ export const updateAppointment = async (
     return true;
   } catch (error) {
     if (isAxiosError(error)) {
-      toast("Não foi possível atualizar o agendamento...", {
+      toast('Não foi possível atualizar o agendamento...', {
         duration: 3000,
         style: errorToast,
       });

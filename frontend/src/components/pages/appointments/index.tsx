@@ -1,8 +1,8 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { Appointment } from "@/domains/types";
-import { getAppointments } from "@/services/appointments/get-appointments";
-import { useEffect, useState } from "react";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { Appointment } from '@/domains/types';
+import { getAppointments } from '@/services/appointments/get-appointments';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -10,10 +10,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { deleteAppointment } from "@/services/appointments/delete-appointment";
+} from '@/components/ui/table';
+import { FaPlusCircle, FaPen, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { deleteAppointment } from '@/services/appointments/delete-appointment';
 
 export const Appointments = () => {
   const [shouldReload, setShoudReload] = useState(false);
@@ -34,7 +34,7 @@ export const Appointments = () => {
   const handleAppointmentDelete = async (id: string) => {
     const deleted = await deleteAppointment(id);
 
-    if (deleted) setShoudReload((prev) => !prev);
+    if (deleted) setShoudReload(prev => !prev);
   };
 
   return (
@@ -49,7 +49,7 @@ export const Appointments = () => {
               type="text"
             />
             <button
-              onClick={() => navigate("/appointments/new")}
+              onClick={() => navigate('/appointments/new')}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -84,7 +84,7 @@ export const Appointments = () => {
                 {appointments.map((appointment, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={index}
                   >
@@ -96,7 +96,7 @@ export const Appointments = () => {
                     </TableCell>
 
                     <TableCell className="w-[18.7%]">
-                      {new Date(appointment.date).toLocaleString("pt-br")}
+                      {new Date(appointment.date).toLocaleString('pt-br')}
                     </TableCell>
 
                     <TableCell className="w-[20%]">
@@ -115,10 +115,10 @@ export const Appointments = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            "selectedAppointment",
+                            'selectedAppointment',
                             JSON.stringify(appointment)
                           );
-                          navigate("/appointments/edit");
+                          navigate('/appointments/edit');
                         }}
                       >
                         <FaPen color="white" />

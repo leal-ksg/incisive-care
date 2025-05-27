@@ -1,9 +1,9 @@
-import { isAxiosError } from "axios";
-import { Patient } from "../../domains/types";
-import { api } from "../api";
+import { isAxiosError } from 'axios';
+import { Patient } from '../../domains/types';
+import { api } from '../api';
 
 export const getPatientById = async (
-  idType: "cpf" | "id",
+  idType: 'cpf' | 'id',
   id: string
 ): Promise<Patient[]> => {
   try {
@@ -12,6 +12,7 @@ export const getPatientById = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
 

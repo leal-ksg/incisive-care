@@ -1,13 +1,13 @@
-import { Route, Routes } from "react-router-dom";
-import { Home } from "./components/pages/home";
-import { Appointments } from "./components/pages/appointments";
-import { AppointmentsMaintenance } from "./components/pages/appointments/maintenance";
-import { Patients } from "./components/pages/patients";
-import { PatientsMaintenance } from "./components/pages/patients/maintenance";
-import { Dentists } from "./components/pages/dentists";
-import { DentistsMaintenance } from "./components/pages/dentists/maintenance";
-import { Services } from "./components/pages/services";
-import { ServicesMaintenance } from "./components/pages/services/maintenance";
+import { Route, Routes } from 'react-router-dom';
+import { Home } from './components/pages/home';
+import { Appointments } from './components/pages/appointments';
+import { AppointmentsMaintenance } from './components/pages/appointments/maintenance';
+import { Patients } from './components/pages/patients';
+import { PatientsMaintenance } from './components/pages/patients/maintenance';
+import { Dentists } from './components/pages/dentists';
+import { DentistsMaintenance } from './components/pages/dentists/maintenance';
+import { Services } from './components/pages/services';
+import { ServicesMaintenance } from './components/pages/services/maintenance';
 
 function App() {
   return (

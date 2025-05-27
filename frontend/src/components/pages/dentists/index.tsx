@@ -1,7 +1,7 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { Dentist } from "@/domains/types";
-import { useEffect, useState } from "react";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { Dentist } from '@/domains/types';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,11 +9,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { getDentists } from "@/services/dentists/get-dentists";
-import { deleteDentist } from "@/services/dentists/delete-dentists";
+} from '@/components/ui/table';
+import { FaPlusCircle, FaPen, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { getDentists } from '@/services/dentists/get-dentists';
+import { deleteDentist } from '@/services/dentists/delete-dentists';
 
 export const Dentists = () => {
   const [shouldReload, setShoudReload] = useState(false);
@@ -34,7 +34,7 @@ export const Dentists = () => {
   const handleDentistDelete = async (id: string) => {
     const deleted = await deleteDentist(id);
 
-    if (deleted) setShoudReload((prev) => !prev);
+    if (deleted) setShoudReload(prev => !prev);
   };
 
   return (
@@ -49,7 +49,7 @@ export const Dentists = () => {
               type="text"
             />
             <button
-              onClick={() => navigate("/dentists/new")}
+              onClick={() => navigate('/dentists/new')}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -81,24 +81,18 @@ export const Dentists = () => {
                 {dentists?.map((dentist, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={dentist.id}
                   >
-                    <TableCell className="w-[36.2%]">
-                      {dentist?.name}
-                    </TableCell>
-                    <TableCell className="w-[15.2%]">
-                      {dentist?.cpf}
-                    </TableCell>
+                    <TableCell className="w-[36.2%]">{dentist?.name}</TableCell>
+                    <TableCell className="w-[15.2%]">{dentist?.cpf}</TableCell>
 
                     <TableCell className="w-[21.5%]">
                       {dentist.license}
                     </TableCell>
 
-                    <TableCell className="w-[17%]">
-                      {dentist?.phone}
-                    </TableCell>
+                    <TableCell className="w-[17%]">{dentist?.phone}</TableCell>
 
                     <TableCell className="w-[10%] flex items-center justify-start">
                       <button
@@ -106,10 +100,10 @@ export const Dentists = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            "selectedDentist",
+                            'selectedDentist',
                             JSON.stringify(dentist)
                           );
-                          navigate("/dentists/edit");
+                          navigate('/dentists/edit');
                         }}
                       >
                         <FaPen color="white" />

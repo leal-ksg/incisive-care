@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import Patient from "../models/patient";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import Patient from '../models/patient';
 
 export const patientController = {
   async findAll(req: Request, res: Response): Promise<any> {
@@ -20,14 +21,14 @@ export const patientController = {
       const { idType, id } = req.params;
 
       if (!id)
-        return res.status(400).send({ error: "Provide an ID to be found" });
+        return res.status(400).send({ error: 'Provide an ID to be found' });
 
-      if (idType === "id") {
+      if (idType === 'id') {
         const patient = await Patient.findById(id);
         if (!patient) return res.status(204).send();
 
         return res.json(patient);
-      } else if (idType === "cpf") {
+      } else if (idType === 'cpf') {
         const patient = await Patient.find({ cpf: id });
         if (!patient) return res.status(204).send();
 
@@ -57,7 +58,7 @@ export const patientController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID for the update" });
+        return res.status(400).send({ error: 'Provide an ID for the update' });
 
       await Patient.updateOne(
         {
@@ -79,7 +80,7 @@ export const patientController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide the ID to be deleted" });
+        return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
       await Patient.deleteOne({
         _id: id,

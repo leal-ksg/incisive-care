@@ -1,8 +1,8 @@
-import { isAxiosError } from "axios";
-import { api } from "../api";
-import { errorToast, successToast } from "@/lib/toast-styles";
-import { toast } from "sonner";
-import { AppointmentDTO } from "@/domains/types";
+import { isAxiosError } from 'axios';
+import { api } from '../api';
+import { errorToast, successToast } from '@/lib/toast-styles';
+import { toast } from 'sonner';
+import { AppointmentDTO } from '@/domains/types';
 
 export const createAppointment = async (
   appointment: AppointmentDTO
@@ -10,7 +10,7 @@ export const createAppointment = async (
   try {
     await api.post(`/appointments/`, appointment);
 
-    toast("Agendamento marcado!", {
+    toast('Agendamento marcado!', {
       duration: 3000,
       style: successToast,
     });
@@ -18,7 +18,7 @@ export const createAppointment = async (
     return true;
   } catch (error) {
     if (isAxiosError(error)) {
-      toast("Não foi possível marcar o agendamento...", {
+      toast('Não foi possível marcar o agendamento...', {
         duration: 3000,
         style: errorToast,
       });

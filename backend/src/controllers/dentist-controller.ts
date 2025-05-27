@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import Dentist from "../models/dentist";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import Dentist from '../models/dentist';
 
 export const dentistController = {
   async findAll(req: Request, res: Response): Promise<any> {
@@ -19,7 +20,7 @@ export const dentistController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID to be found" });
+        return res.status(400).send({ error: 'Provide an ID to be found' });
 
       const dentist = await Dentist.findById(id);
       if (!dentist) return res.status(204).send();
@@ -47,7 +48,7 @@ export const dentistController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID for the update" });
+        return res.status(400).send({ error: 'Provide an ID for the update' });
 
       await Dentist.updateOne(
         {
@@ -69,7 +70,7 @@ export const dentistController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide the ID to be deleted" });
+        return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
       await Dentist.deleteOne({
         _id: id,

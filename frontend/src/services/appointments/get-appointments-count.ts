@@ -1,6 +1,6 @@
-import { isAxiosError } from "axios";
-import { AppointmentsCount } from "../../domains/types";
-import { api } from "../api";
+import { isAxiosError } from 'axios';
+import { AppointmentsCount } from '../../domains/types';
+import { api } from '../api';
 
 export const getAppointmentsCount = async (): Promise<AppointmentsCount[]> => {
   try {
@@ -9,6 +9,7 @@ export const getAppointmentsCount = async (): Promise<AppointmentsCount[]> => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
 

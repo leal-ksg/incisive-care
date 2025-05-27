@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const serviceSchema = new mongoose.Schema(
   {
@@ -39,4 +39,4 @@ export const serviceSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Service", serviceSchema);
+export default mongoose.model('Service', serviceSchema);

@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import { FaEye, FaPlusCircle } from "react-icons/fa";
-import { AppointmentsCount } from "../../domains/types";
-import { getAppointmentsCount } from "../../services/appointments/get-appointments-count";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from 'react';
+import { FaEye, FaPlusCircle } from 'react-icons/fa';
+import { AppointmentsCount } from '../../domains/types';
+import { getAppointmentsCount } from '../../services/appointments/get-appointments-count';
+import { useNavigate } from 'react-router-dom';
 
 export const AppointmentsInfo = () => {
   const [appointmentsCount, setAppointmentsCount] = useState<
@@ -12,17 +12,17 @@ export const AppointmentsInfo = () => {
   const navigate = useNavigate();
 
   const scheduled = useMemo(
-    () => appointmentsCount.filter((ap) => ap._id === "SCHEDULED"),
+    () => appointmentsCount.filter(ap => ap._id === 'SCHEDULED'),
     [appointmentsCount]
   );
 
   const completed = useMemo(
-    () => appointmentsCount.filter((ap) => ap._id === "COMPLETED"),
+    () => appointmentsCount.filter(ap => ap._id === 'COMPLETED'),
     [appointmentsCount]
   );
 
   const cancelled = useMemo(
-    () => appointmentsCount.filter((ap) => ap._id === "CANCELLED"),
+    () => appointmentsCount.filter(ap => ap._id === 'CANCELLED'),
     [appointmentsCount]
   );
 
@@ -68,14 +68,14 @@ export const AppointmentsInfo = () => {
           <button
             type="button"
             className="cursor-pointer"
-            onClick={() => navigate("/appointments")}
+            onClick={() => navigate('/appointments')}
           >
             <FaEye size={30} />
           </button>
           <button
             type="button"
             className="cursor-pointer"
-            onClick={() => navigate("/appointments/new")}
+            onClick={() => navigate('/appointments/new')}
           >
             <FaPlusCircle size={28} />
           </button>

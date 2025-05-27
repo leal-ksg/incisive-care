@@ -1,18 +1,18 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { useParams } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
-import { useCallback, useEffect, useState } from "react";
-import { formatInput } from "@/lib/format-input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { appointmentSchema } from "./schema";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { useParams } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
+import { useCallback, useEffect, useState } from 'react';
+import { formatInput } from '@/lib/format-input';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { appointmentSchema } from './schema';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 import {
   Table,
@@ -21,25 +21,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { FaTrash } from "react-icons/fa";
-import { FaCircleCheck, FaCirclePlus, FaCircleXmark } from "react-icons/fa6";
-import { getPatientById } from "@/services/patients/get-patient-by-id";
-import { getDentists } from "@/services/dentists/get-dentists";
+} from '@/components/ui/table';
+import { FaTrash } from 'react-icons/fa';
+import { FaCircleCheck, FaCirclePlus, FaCircleXmark } from 'react-icons/fa6';
+import { getPatientById } from '@/services/patients/get-patient-by-id';
+import { getDentists } from '@/services/dentists/get-dentists';
 import {
   AppointmentDTO,
   AppointmentsFormData,
   Dentist,
   Patient,
   Service,
-} from "@/domains/types";
-import { getServices } from "@/services/services/get-services";
-import { toast } from "sonner";
-import { errorToast } from "@/lib/toast-styles";
-import { createAppointment } from "@/services/appointments/create-appointment";
-import { formatToDatetime } from "@/lib/format-to-datetime";
-import { updateAppointment } from "@/services/appointments/update-appointment";
-import { InferType } from "yup";
+} from '@/domains/types';
+import { getServices } from '@/services/services/get-services';
+import { toast } from 'sonner';
+import { errorToast } from '@/lib/toast-styles';
+import { createAppointment } from '@/services/appointments/create-appointment';
+import { formatToDatetime } from '@/lib/format-to-datetime';
+import { updateAppointment } from '@/services/appointments/update-appointment';
+import { InferType } from 'yup';
 
 export const AppointmentsMaintenance = () => {
   const [appointmentId, setAppointmentId] = useState<string>();
@@ -55,8 +55,8 @@ export const AppointmentsMaintenance = () => {
     });
   const { errors } = formState;
 
-  const patientCPF = watch("patientCPF");
-  const serviceId = watch("service");
+  const patientCPF = watch('patientCPF');
+  const serviceId = watch('service');
 
   useEffect(() => {
     const fetchDentists = async () => {
@@ -78,37 +78,37 @@ export const AppointmentsMaintenance = () => {
   useEffect(() => {
     const fillDefaultValues = () => {
       const selectedAppointment = JSON.parse(
-        localStorage.getItem("selectedAppointment")!
+        localStorage.getItem('selectedAppointment')!
       );
 
       setValue(
-        "date",
+        'date',
         formatToDatetime(selectedAppointment.date) as unknown as Date
       );
       if (selectedAppointment.dentist?.id)
-        setValue("dentistId", selectedAppointment.dentist.id);
-      setValue("patientCPF", selectedAppointment.patient.cpf);
-      setValue("patientName", selectedAppointment.patient.name);
+        setValue('dentistId', selectedAppointment.dentist.id);
+      setValue('patientCPF', selectedAppointment.patient.cpf);
+      setValue('patientName', selectedAppointment.patient.name);
 
       setSelectedServices(selectedAppointment.services);
       setAppointmentId(selectedAppointment.id);
     };
 
-    if (action === "edit") fillDefaultValues();
+    if (action === 'edit') fillDefaultValues();
   }, [action, setValue, dentists]);
 
   useEffect(() => {
     const fetchPatient = async () => {
-      const response = await getPatientById("cpf", patientCPF);
+      const response = await getPatientById('cpf', patientCPF);
 
       setPatient(response[0]);
-      setValue("patientName", response[0].name);
+      setValue('patientName', response[0].name);
     };
 
     if (patientCPF?.length === 14) {
       fetchPatient();
     } else {
-      setValue("patientName", "");
+      setValue('patientName', '');
     }
   }, [patientCPF, setValue]);
 
@@ -116,16 +116,16 @@ export const AppointmentsMaintenance = () => {
     if (!serviceId) return;
 
     const selectedService = services.filter(
-      (service) => service.id === serviceId
+      service => service.id === serviceId
     );
 
-    setSelectedServices((prev) => [...prev, ...selectedService]);
+    setSelectedServices(prev => [...prev, ...selectedService]);
   };
 
   const onSubmit = useCallback(
     async (data: AppointmentsFormData) => {
       if (!selectedServices.length) {
-        toast("Selecione ao menos um serviço", {
+        toast('Selecione ao menos um serviço', {
           duration: 3000,
           style: errorToast,
         });
@@ -134,7 +134,7 @@ export const AppointmentsMaintenance = () => {
       }
 
       if (!patient || !data.patientName) {
-        toast("O paciente não está cadastrado", {
+        toast('O paciente não está cadastrado', {
           duration: 3000,
           style: errorToast,
         });
@@ -146,10 +146,10 @@ export const AppointmentsMaintenance = () => {
         date: data.date,
         dentist: data.dentistId,
         patient: patient.id,
-        services: selectedServices.map((service) => service.id),
+        services: selectedServices.map(service => service.id),
       };
 
-      if (action === "new") {
+      if (action === 'new') {
         await createAppointment(appointment);
       } else {
         await updateAppointment(appointmentId!, appointment);
@@ -163,7 +163,7 @@ export const AppointmentsMaintenance = () => {
       <Toolbar />
       <PageTitle
         title={
-          action === "new" ? "Novo agendamento" : "Atualização de agendamento"
+          action === 'new' ? 'Novo agendamento' : 'Atualização de agendamento'
         }
         backPath="/appointments"
       />
@@ -175,10 +175,10 @@ export const AppointmentsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("patientCPF", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "cpf");
-                    setValue("patientCPF", formattedValue);
+                {...register('patientCPF', {
+                  onChange: e => {
+                    const formattedValue = formatInput(e.target.value, 'cpf');
+                    setValue('patientCPF', formattedValue);
                   },
                 })}
               />
@@ -194,7 +194,7 @@ export const AppointmentsMaintenance = () => {
                 disabled
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("patientName")}
+                {...register('patientName')}
               />
             </div>
           </div>
@@ -213,7 +213,7 @@ export const AppointmentsMaintenance = () => {
                       </SelectTrigger>
                       <SelectContent className="border-gray-800">
                         {dentists && dentists.length ? (
-                          dentists?.map((dentist) => {
+                          dentists?.map(dentist => {
                             return (
                               <SelectItem key={dentist.id} value={dentist.id}>
                                 {dentist.name}
@@ -242,7 +242,7 @@ export const AppointmentsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="datetime-local"
-                {...register("date")}
+                {...register('date')}
               />
               {errors.date && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -269,7 +269,7 @@ export const AppointmentsMaintenance = () => {
                       </SelectTrigger>
                       <SelectContent className="border-gray-800">
                         {services && services.length ? (
-                          services?.map((service) => {
+                          services?.map(service => {
                             return (
                               <SelectItem key={service.id} value={service.id}>
                                 {service.description}
@@ -326,7 +326,7 @@ export const AppointmentsMaintenance = () => {
                 {selectedServices.map((row, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={row.id}
                   >
@@ -336,9 +336,9 @@ export const AppointmentsMaintenance = () => {
                     <TableCell className="w-[20%]">{row.duration}</TableCell>
 
                     <TableCell className="w-[12%]">
-                      {row.unitAmount.toLocaleString("pt-br", {
-                        currency: "BRL",
-                        style: "currency",
+                      {row.unitAmount.toLocaleString('pt-br', {
+                        currency: 'BRL',
+                        style: 'currency',
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })}
@@ -349,8 +349,8 @@ export const AppointmentsMaintenance = () => {
                         className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px] transition-colors ease duration-[0.3s]  bg-red-400 hover:bg-red-300 rounded-[6px]"
                         type="button"
                         onClick={() => {
-                          setSelectedServices((prev) =>
-                            prev.filter((service) => service.id !== row.id)
+                          setSelectedServices(prev =>
+                            prev.filter(service => service.id !== row.id)
                           );
                         }}
                       >

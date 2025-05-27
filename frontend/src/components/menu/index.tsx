@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { MenuButton } from "../menu-button";
+import { useNavigate } from 'react-router-dom';
+import { MenuButton } from '../menu-button';
 
 export const Menu = () => {
   const navigate = useNavigate();
@@ -10,17 +10,17 @@ export const Menu = () => {
         <MenuButton
           image="/patients.png"
           title="Pacientes"
-          onClick={() => navigate("/patients")}
+          onClick={() => navigate('/patients')}
         />
         <MenuButton
           image="/dentists.png"
           title="Dentistas"
-          onClick={() => navigate("/dentists")}
+          onClick={() => navigate('/dentists')}
         />
         <MenuButton
           image="/services.png"
           title="Serviços"
-          onClick={() => navigate("/services")}
+          onClick={() => navigate('/services')}
         />
       </div>
     </div>

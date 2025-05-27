@@ -1,16 +1,16 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useCallback, useEffect, useState } from "react";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useCallback, useEffect, useState } from 'react';
 
-import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
-import { InferType } from "yup";
-import { Service } from "@/domains/types";
-import { createServiceSchema } from "../../../../../../common/validation/service/create-service-schema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { createService } from "@/services/services/create-service";
-import { updateService } from "@/services/services/update-service";
+import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
+import { InferType } from 'yup';
+import { Service } from '@/domains/types';
+import { createServiceSchema } from '../../../../../../common/validation/service/create-service-schema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { createService } from '@/services/services/create-service';
+import { updateService } from '@/services/services/update-service';
 
 type ServiceFormData = InferType<typeof createServiceSchema>;
 
@@ -29,23 +29,23 @@ export const ServicesMaintenance = () => {
   useEffect(() => {
     const fillDefaultValues = () => {
       const selectedService: Service = JSON.parse(
-        localStorage.getItem("selectedService")!
+        localStorage.getItem('selectedService')!
       );
 
-      setValue("category", selectedService.category);
-      setValue("description", selectedService.description);
-      setValue("duration", selectedService.duration);
-      setValue("unitAmount", selectedService.unitAmount);
+      setValue('category', selectedService.category);
+      setValue('description', selectedService.description);
+      setValue('duration', selectedService.duration);
+      setValue('unitAmount', selectedService.unitAmount);
 
       setService(selectedService);
     };
 
-    if (action === "edit") fillDefaultValues();
+    if (action === 'edit') fillDefaultValues();
   }, [action, setValue]);
 
   const onSubmit = useCallback(
     async (data: ServiceFormData) => {
-      if (action === "new") {
+      if (action === 'new') {
         await createService(data);
       } else {
         await updateService({ ...data, id: service!.id });
@@ -59,7 +59,7 @@ export const ServicesMaintenance = () => {
       <Toolbar />
       <PageTitle
         title={
-          action === "new" ? "Cadastro de serviço" : "Atualização de serviço"
+          action === 'new' ? 'Cadastro de serviço' : 'Atualização de serviço'
         }
         backPath="/services"
       />
@@ -74,7 +74,7 @@ export const ServicesMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("description")}
+                {...register('description')}
               />
               {errors.description && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -88,7 +88,7 @@ export const ServicesMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("category")}
+                {...register('category')}
               />
               {errors.category && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -104,7 +104,7 @@ export const ServicesMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="number"
-                {...register("duration")}
+                {...register('duration')}
               />
               {errors.duration && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -118,7 +118,7 @@ export const ServicesMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="number"
-                {...register("unitAmount")}
+                {...register('unitAmount')}
               />
               {errors.unitAmount && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -129,7 +129,7 @@ export const ServicesMaintenance = () => {
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">
             <button
-              onClick={() => navigate("/services")}
+              onClick={() => navigate('/services')}
               className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
               type="button"
             >

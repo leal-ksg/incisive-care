@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import Service from "../models/service";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import Service from '../models/service';
 
 export const serviceController = {
   async findAll(req: Request, res: Response): Promise<any> {
@@ -19,7 +20,7 @@ export const serviceController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID to be found" });
+        return res.status(400).send({ error: 'Provide an ID to be found' });
 
       const service = await Service.findById(id);
       if (!service) return res.status(204).send();
@@ -47,7 +48,7 @@ export const serviceController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID for the update" });
+        return res.status(400).send({ error: 'Provide an ID for the update' });
 
       await Service.updateOne(
         {
@@ -69,7 +70,7 @@ export const serviceController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide the ID to be deleted" });
+        return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
       await Service.deleteOne({
         _id: id,

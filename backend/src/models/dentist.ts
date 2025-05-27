@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const dentistSchema = new mongoose.Schema(
   {
@@ -41,4 +41,4 @@ const dentistSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Dentist", dentistSchema);
+export default mongoose.model('Dentist', dentistSchema);

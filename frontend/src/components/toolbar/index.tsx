@@ -1,9 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const Toolbar = () => {
   const { pathname } = useLocation();
 
-  return pathname === "/" ? (
+  return pathname === '/' ? (
     <div className="bg-[#37D0F5] w-full h-[320px] px-[51px] py-[76px]">
       <img
         className="w-50 absolute top-[90px] left-[180px]"

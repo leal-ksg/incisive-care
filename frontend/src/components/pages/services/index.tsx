@@ -1,7 +1,7 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { Service } from "@/domains/types";
-import { useEffect, useState } from "react";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { Service } from '@/domains/types';
+import { useEffect, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,11 +9,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { FaPlusCircle, FaPen, FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { getServices } from "@/services/services/get-services";
-import { deleteService } from "@/services/services/delete-service";
+} from '@/components/ui/table';
+import { FaPlusCircle, FaPen, FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { getServices } from '@/services/services/get-services';
+import { deleteService } from '@/services/services/delete-service';
 
 export const Services = () => {
   const [shouldReload, setShoudReload] = useState(false);
@@ -34,7 +34,7 @@ export const Services = () => {
   const handleServiceDelete = async (id: string) => {
     const deleted = await deleteService(id);
 
-    if (deleted) setShoudReload((prev) => !prev);
+    if (deleted) setShoudReload(prev => !prev);
   };
 
   return (
@@ -49,7 +49,7 @@ export const Services = () => {
               type="text"
             />
             <button
-              onClick={() => navigate("/services/new")}
+              onClick={() => navigate('/services/new')}
               className="flex rounded-md font-bold p-2 cursor-pointer text-white bg-[#00AEC7] hover:bg-[#63daec] transition-colors ease duration-[0.2s]"
             >
               <FaPlusCircle size={20} />
@@ -81,7 +81,7 @@ export const Services = () => {
                 {services?.map((service, index) => (
                   <TableRow
                     className={`flex font-semibold text-base text-gray-600 ${
-                      index % 2 === 0 ? "bg-[#EFFCFF]" : "bg-[#C7D8DA]"
+                      index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={service.id}
                   >
@@ -106,10 +106,10 @@ export const Services = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            "selectedService",
+                            'selectedService',
                             JSON.stringify(service)
                           );
-                          navigate("/services/edit");
+                          navigate('/services/edit');
                         }}
                       >
                         <FaPen color="white" />

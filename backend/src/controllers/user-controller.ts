@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import { User } from "../models/user";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request, Response } from 'express';
+import { User } from '../models/user';
 
 export const userController = {
   async findAll(req: Request, res: Response): Promise<any> {
@@ -17,7 +18,7 @@ export const userController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID to be found" });
+        return res.status(400).send({ error: 'Provide an ID to be found' });
 
       const user = await User.findByPk(id);
       if (!user) return res.status(204).send();
@@ -45,7 +46,7 @@ export const userController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide an ID for the update" });
+        return res.status(400).send({ error: 'Provide an ID for the update' });
 
       await User.update(req.body, { where: { id } });
 
@@ -61,7 +62,7 @@ export const userController = {
     try {
       const { id } = req.params;
       if (!id)
-        return res.status(400).send({ error: "Provide the ID to be deleted" });
+        return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
       await User.destroy({ where: { id } });
 

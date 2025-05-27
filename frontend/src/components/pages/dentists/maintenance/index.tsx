@@ -1,17 +1,17 @@
-import { PageTitle } from "@/components/page-title";
-import Toolbar from "@/components/toolbar";
-import { useNavigate, useParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useCallback, useEffect, useState } from "react";
-import { formatInput } from "@/lib/format-input";
+import { PageTitle } from '@/components/page-title';
+import Toolbar from '@/components/toolbar';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useCallback, useEffect, useState } from 'react';
+import { formatInput } from '@/lib/format-input';
 
-import { FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
-import { InferType } from "yup";
-import { Dentist } from "@/domains/types";
-import { createDentistSchema } from "../../../../../../common/validation/dentist/create-dentist-schema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { createDentist } from "@/services/dentists/create-dentist";
-import { updateDentist } from "@/services/dentists/update-dentist";
+import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
+import { InferType } from 'yup';
+import { Dentist } from '@/domains/types';
+import { createDentistSchema } from '../../../../../../common/validation/dentist/create-dentist-schema';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { createDentist } from '@/services/dentists/create-dentist';
+import { updateDentist } from '@/services/dentists/update-dentist';
 
 type DentistFormData = InferType<typeof createDentistSchema>;
 
@@ -30,23 +30,23 @@ export const DentistsMaintenance = () => {
   useEffect(() => {
     const fillDefaultValues = () => {
       const selectedDentist: Dentist = JSON.parse(
-        localStorage.getItem("selectedDentist")!
+        localStorage.getItem('selectedDentist')!
       );
 
-      setValue("license", selectedDentist.license);
-      setValue("name", selectedDentist.name);
-      setValue("cpf", selectedDentist.cpf);
-      setValue("phone", selectedDentist.phone);
+      setValue('license', selectedDentist.license);
+      setValue('name', selectedDentist.name);
+      setValue('cpf', selectedDentist.cpf);
+      setValue('phone', selectedDentist.phone);
 
       setDentist(selectedDentist);
     };
 
-    if (action === "edit") fillDefaultValues();
+    if (action === 'edit') fillDefaultValues();
   }, [action, setValue]);
 
   const onSubmit = useCallback(
     async (data: DentistFormData) => {
-      if (action === "new") {
+      if (action === 'new') {
         await createDentist(data);
       } else {
         await updateDentist({ ...data, id: dentist!.id });
@@ -60,7 +60,7 @@ export const DentistsMaintenance = () => {
       <Toolbar />
       <PageTitle
         title={
-          action === "new" ? "Cadastro de dentista" : "Atualização de dentista"
+          action === 'new' ? 'Cadastro de dentista' : 'Atualização de dentista'
         }
         backPath="/dentists"
       />
@@ -75,10 +75,10 @@ export const DentistsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("cpf", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "cpf");
-                    setValue("cpf", formattedValue);
+                {...register('cpf', {
+                  onChange: e => {
+                    const formattedValue = formatInput(e.target.value, 'cpf');
+                    setValue('cpf', formattedValue);
                   },
                 })}
               />
@@ -94,7 +94,7 @@ export const DentistsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("name")}
+                {...register('name')}
               />
               {errors.name && (
                 <span className="absolute top-[100%] text-destructive font-semibold">
@@ -110,10 +110,10 @@ export const DentistsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("phone", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "phone");
-                    setValue("phone", formattedValue);
+                {...register('phone', {
+                  onChange: e => {
+                    const formattedValue = formatInput(e.target.value, 'phone');
+                    setValue('phone', formattedValue);
                   },
                 })}
               />
@@ -129,10 +129,10 @@ export const DentistsMaintenance = () => {
               <input
                 className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
                 type="text"
-                {...register("license", {
-                  onChange: (e) => {
-                    const formattedValue = formatInput(e.target.value, "cro");
-                    setValue("license", formattedValue);
+                {...register('license', {
+                  onChange: e => {
+                    const formattedValue = formatInput(e.target.value, 'cro');
+                    setValue('license', formattedValue);
                   },
                 })}
               />
@@ -145,7 +145,7 @@ export const DentistsMaintenance = () => {
           </div>
           <div className="flex gap-2 fixed bottom-30 right-40">
             <button
-              onClick={() => navigate("/dentists")}
+              onClick={() => navigate('/dentists')}
               className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
               type="button"
             >
