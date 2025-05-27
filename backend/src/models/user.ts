@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../databases/mysql";
 
-const User = sequelize.define("user", {
+export const User = sequelize.define("user", {
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,

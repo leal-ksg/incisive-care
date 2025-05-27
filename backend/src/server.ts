@@ -25,7 +25,7 @@ async function main() {
   server.use("/api", router);
 
   server.listen(process.env.PORT, () => {
-    console.info(`Server running at port ${process.env.PORT}!`);
+    console.log(`Server running at port ${process.env.PORT}!`);
   });
 }
 

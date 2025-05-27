@@ -8,6 +8,8 @@ import { createDentistSchema } from "../../common/validation/dentist/create-dent
 import { dentistController } from "./controllers/dentist-controller";
 import { createPatientSchema } from "../../common/validation/patient/create-patient-schema";
 import { patientController } from "./controllers/patient-controller";
+import { userController } from "./controllers/user-controller";
+import { createUserSchema } from "../../common/validation/user/create-user-schema";
 
 const router = Router();
 
@@ -55,5 +57,16 @@ router.post(
 );
 router.put("/patients/:id", patientController.update);
 router.delete("/patients/:id", patientController.delete);
+
+// USERS
+router.get("/users", userController.findAll);
+router.get("/users/:id", userController.findOne);
+router.post(
+  "/users",
+  (req, res, next) => validateSchema(req, res, next, createUserSchema),
+  userController.create
+);
+router.put("/users/:id", userController.update);
+router.delete("/users/:id", userController.delete);
 
 export default router;
