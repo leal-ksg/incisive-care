@@ -50,3 +50,11 @@ export interface AppointmentsFormData {
   dentistId: string;
   date: Date;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  role: 'admin' | 'dentist';
+  createdAt: string;
+  updatedAt: string;
+}

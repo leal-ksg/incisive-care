@@ -8,7 +8,7 @@ declare module 'express-serve-static-core' {
   }
 }
 
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const { authorization } = req.headers;
   const secret = process.env.ACCESS_TOKEN_SECRET;
 
@@ -23,7 +23,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const token = authorization.split(' ')[1];
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
+  await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
     if (err) {
       res.sendStatus(403);
       return;
@@ -33,7 +33,4 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     next();
     return;
   });
-
-  res.sendStatus(501);
-  return;
 };

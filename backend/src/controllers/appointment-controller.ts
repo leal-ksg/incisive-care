@@ -59,7 +59,7 @@ export const appointmentController = {
   async create(req: Request, res: Response): Promise<any> {
     // TODO: ensure patient and dentist exists
     try {
-      const appointment = Appointment.create(req.body);
+      const appointment = await Appointment.create(req.body);
       return res.json(appointment);
     } catch (err) {
       return res.status(500).send({
