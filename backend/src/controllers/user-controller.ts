@@ -40,7 +40,7 @@ export const userController = {
   },
 
   async create(req: Request, res: Response): Promise<any> {
-    const { password, role, email } = req.body;
+    const { password, email, ...rest } = req.body;
 
     try {
       const registeredUser = await User.findOne({
@@ -58,11 +58,10 @@ export const userController = {
 
       const user = await User.create({
         password: hash,
-        role,
         email,
+        ...rest,
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: _, ...userWithoutPassword } = user.toJSON();
 
       return res.json(userWithoutPassword);
@@ -130,11 +129,14 @@ export const userController = {
         return res.status(401).send({ error: 'Wrong password or e-mail' });
 
       const accessToken = jwt.sign(
-        { email: user.get('email'), role: user.get('role') },
+        {
+          email: user.get('email'),
+          role: user.get('role'),
+          name: user.get('name'),
+        },
         secret
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: _, ...userWithoutPassword } = user.toJSON();
 
       return res.json({ accessToken, user: userWithoutPassword });

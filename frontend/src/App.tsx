@@ -11,6 +11,8 @@ import { ServicesMaintenance } from './components/pages/services/maintenance';
 import Login from './components/pages/login';
 import { AuthProvider } from './contexts/auth-context';
 import { PrivateRoute } from './components/private-route';
+import { Users } from './components/pages/users';
+import { UsersMaintenance } from './components/pages/users/maintenance';
 
 function App() {
   return (
@@ -57,6 +59,24 @@ function App() {
           element={
             <PrivateRoute>
               <PatientsMaintenance />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Users */}
+        <Route
+          path="/users"
+          element={
+            <PrivateRoute>
+              <Users />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/users/:action"
+          element={
+            <PrivateRoute>
+              <UsersMaintenance />
             </PrivateRoute>
           }
         />

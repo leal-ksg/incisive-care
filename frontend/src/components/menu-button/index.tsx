@@ -7,12 +7,15 @@ interface MenuButtonProps {
 export const MenuButton = ({ image, onClick, title }: MenuButtonProps) => {
   return (
     <button
-      className="flex flex-col cursor-pointer rounded-xl overflow-hidden gap-6 bg-[#00AEC7] transition-colors ease duration-[0.2s]  w-[225px] h-[225px]"
+      className="ease flex h-[225px] w-[225px] cursor-pointer flex-col gap-6 overflow-hidden rounded-xl bg-[#00AEC7] transition-colors duration-[0.2s]"
       type="button"
       onClick={onClick}
     >
-      <img className="object-fit max-w-full max-h-[160px]" src={image} />
-      <p className="text-lg text-white font-bold">{title}</p>
+      <img
+        className="mt-4 max-h-[130px] max-w-full object-scale-down"
+        src={image}
+      />
+      <p className="text-lg font-bold text-white">{title}</p>
     </button>
   );
 };

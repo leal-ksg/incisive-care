@@ -5,8 +5,8 @@ export const Menu = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-center w-full h-full ">
-      <div className="flex gap-5 mt-15">
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="mt-15 flex gap-5">
         <MenuButton
           image="/patients.png"
           title="Pacientes"
@@ -21,6 +21,11 @@ export const Menu = () => {
           image="/services.png"
           title="Serviços"
           onClick={() => navigate('/services')}
+        />
+        <MenuButton
+          image="/users.png"
+          title="Usuários"
+          onClick={() => navigate('/users')}
         />
       </div>
     </div>

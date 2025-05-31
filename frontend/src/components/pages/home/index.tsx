@@ -4,7 +4,7 @@ import Toolbar from '@/components/toolbar';
 
 export const Home = () => {
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex w-full flex-col items-center">
       <Toolbar />
       <AppointmentsInfo />
       <Menu />

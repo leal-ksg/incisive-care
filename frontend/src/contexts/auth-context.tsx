@@ -26,12 +26,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const storedUser = localStorage.getItem('user');
 
-    if (!user) {
-      localStorage.clear();
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     } else {
-      setUser(user);
+      localStorage.clear();
+    }
+
+    const token = localStorage.getItem('accessToken');
+
+    if (token) {
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
     }
   }, []);
 
@@ -49,15 +55,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       localStorage.setItem('user', JSON.stringify(data.user));
 
       if (data?.accessToken) {
-        console.log(data?.accessToken);
         localStorage.setItem('accessToken', data.accessToken);
 
         api.defaults.headers['Authorization'] = `Bearer ${data.accessToken}`;
       }
 
       navigate('/');
-    } catch (error) {
-      console.log(error);
+    } catch {
       toast('Usuário ou senha inválidos', {
         style: errorToast,
         duration: 2000,
