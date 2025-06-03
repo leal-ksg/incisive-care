@@ -4,9 +4,9 @@ import { config } from 'dotenv';
 config();
 
 import cors from 'cors';
-import { connectMongoDB } from './databases/mongo';
+import { connectMongoDB } from './database/mongo';
 import router from './routes';
-import { connectMysql } from './databases/mysql';
+import { connectMysql } from './database/mysql';
 
 async function main() {
   process.on('unhandledRejection', reason => {

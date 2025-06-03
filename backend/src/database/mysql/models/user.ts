@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../databases/mysql';
+import { sequelize } from '..';
 
 export const User = sequelize.define('user', {
   id: {
@@ -26,5 +26,9 @@ export const User = sequelize.define('user', {
   },
   role: {
     type: DataTypes.ENUM('admin', 'dentist'),
+  },
+  teste: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 });

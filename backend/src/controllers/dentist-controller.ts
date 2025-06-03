@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import Dentist from '../models/dentist';
+import Dentist from '../database/mongo/models/dentist';
 
 export const dentistController = {
   async findAll(req: Request, res: Response): Promise<any> {

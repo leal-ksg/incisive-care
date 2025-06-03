@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import { User } from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { User } from '../database/mysql/models/user';
 
 const saltRounds = 10;
 

@@ -7,6 +7,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
+    ignores: ['src/databases/mysql/migrations/**'],
     plugins: { js, prettier: prettierPlugin },
     rules: {
       'prefer-const': 'warn',
