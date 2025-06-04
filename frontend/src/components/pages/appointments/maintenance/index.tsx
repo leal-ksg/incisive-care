@@ -159,7 +159,7 @@ export const AppointmentsMaintenance = () => {
   );
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <Toolbar />
       <PageTitle
         title={
@@ -167,13 +167,13 @@ export const AppointmentsMaintenance = () => {
         }
         backPath="/appointments"
       />
-      <div className="flex flex-col p-6 items-center w-full h-full">
-        <form className="flex flex-col gap-10 w-[60%] mt-8">
-          <div className="flex items-end gap-3 w-full justify-center">
-            <div className="relative flex flex-col w-1/2">
+      <div className="flex h-full w-full flex-col items-center p-6">
+        <form className="mt-8 flex w-[60%] flex-col gap-10">
+          <div className="flex w-full items-end justify-center gap-3">
+            <div className="relative flex w-1/2 flex-col">
               <label htmlFor="patientCPF">CPF do paciente</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="text"
                 {...register('patientCPF', {
                   onChange: e => {
@@ -183,7 +183,7 @@ export const AppointmentsMaintenance = () => {
                 })}
               />
               {errors.patientCPF && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.patientCPF.message}
                 </span>
               )}
@@ -192,7 +192,7 @@ export const AppointmentsMaintenance = () => {
             <div className="w-1/2">
               <input
                 disabled
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="text"
                 {...register('patientName')}
               />
@@ -200,7 +200,7 @@ export const AppointmentsMaintenance = () => {
           </div>
 
           <div className="flex gap-3">
-            <div className="relative flex flex-col w-full">
+            <div className="relative flex w-full flex-col">
               <label htmlFor="dentistId">Dentista</label>
               <Controller
                 name="dentistId"
@@ -208,7 +208,7 @@ export const AppointmentsMaintenance = () => {
                 render={({ field }) => {
                   return (
                     <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="w-full rounded-md border-2  text-sm focus:outline-0 bg-[#F3F3F3] focus:border-gray-400">
+                      <SelectTrigger className="w-full rounded-md border-2 bg-[#F3F3F3] text-sm focus:border-gray-400 focus:outline-0">
                         <SelectValue placeholder="Escolha um dentista" />
                       </SelectTrigger>
                       <SelectContent className="border-gray-800">
@@ -231,28 +231,28 @@ export const AppointmentsMaintenance = () => {
                 }}
               />
               {errors.dentistId && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.dentistId.message}
                 </span>
               )}
             </div>
 
-            <div className="relative flex flex-col w-1/2">
+            <div className="relative flex w-1/2 flex-col">
               <label htmlFor="date">Data / hora</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="datetime-local"
                 {...register('date')}
               />
               {errors.date && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.date.message}
                 </span>
               )}
             </div>
           </div>
 
-          <div className="flex gap-3 items-end">
+          <div className="flex items-end gap-3">
             <div className="w-full">
               <label htmlFor="service">Serviço</label>
               <Controller
@@ -264,7 +264,7 @@ export const AppointmentsMaintenance = () => {
                       value={field.value as string}
                       onValueChange={field.onChange}
                     >
-                      <SelectTrigger className="w-full rounded-md border-2  text-sm focus:outline-0 bg-[#F3F3F3] focus:border-gray-400">
+                      <SelectTrigger className="w-full rounded-md border-2 bg-[#F3F3F3] text-sm focus:border-gray-400 focus:outline-0">
                         <SelectValue placeholder="Escolha um serviço" />
                       </SelectTrigger>
                       <SelectContent className="border-gray-800">
@@ -289,7 +289,7 @@ export const AppointmentsMaintenance = () => {
             </div>
 
             <button
-              className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-cyan-300 hover:bg-cyan-200 rounded-[6px]"
+              className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-cyan-300 transition-colors duration-[0.3s] hover:bg-cyan-200"
               type="button"
               onClick={handleServiceSelection}
             >
@@ -298,34 +298,34 @@ export const AppointmentsMaintenance = () => {
           </div>
         </form>
 
-        <div className="flex flex-col relative  rounded-lg w-[60%] mt-10">
-          <Table className="justify-self-center rounded-t-4">
+        <div className="relative mt-10 flex w-[60%] flex-col rounded-lg">
+          <Table className="rounded-t-4 justify-self-center">
             <TableHeader className="bg-[#00AEC7]">
               <TableRow className="hover:bg-transparent">
-                <TableHead className="w-[35%] text-white ml-0.5 rounded-tl-2xl font-semibold text-base">
+                <TableHead className="ml-0.5 w-[35%] rounded-tl-2xl text-base font-semibold text-white">
                   Descrição
                 </TableHead>
-                <TableHead className="w-[25%] text-white ml-0.5 font-semibold text-base">
+                <TableHead className="ml-0.5 w-[25%] text-base font-semibold text-white">
                   Categoria
                 </TableHead>
-                <TableHead className="w-[20%] text-white ml-0.5 font-semibold text-base">
+                <TableHead className="ml-0.5 w-[20%] text-base font-semibold text-white">
                   Duração (min)
                 </TableHead>
-                <TableHead className="w-[15%] text-white ml-0.5 font-semibold text-base">
+                <TableHead className="ml-0.5 w-[15%] text-base font-semibold text-white">
                   Valor
                 </TableHead>
 
-                <TableHead className="w-[5%] text-white rounded-tr-2xl font-semibold text-base" />
+                <TableHead className="w-[5%] rounded-tr-2xl text-base font-semibold text-white" />
               </TableRow>
             </TableHeader>
           </Table>
 
-          <div className="max-h-[500px] overflow-y-auto custom-scrollbar">
-            <Table className="justify-self-center rounded-t-4">
+          <div className="custom-scrollbar max-h-[500px] overflow-y-auto">
+            <Table className="rounded-t-4 justify-self-center">
               <TableBody>
                 {selectedServices.map((row, index) => (
                   <TableRow
-                    className={`flex font-semibold text-base text-gray-600 ${
+                    className={`flex text-base font-semibold text-gray-600 ${
                       index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
                     }`}
                     key={row.id}
@@ -344,9 +344,9 @@ export const AppointmentsMaintenance = () => {
                       })}
                     </TableCell>
 
-                    <TableCell className="w-[5%] flex items-center justify-start">
+                    <TableCell className="flex w-[5%] items-center justify-start">
                       <button
-                        className="flex ml-2 items-center justify-center cursor-pointer p-[4px] w-[30px] h-[30px] transition-colors ease duration-[0.3s]  bg-red-400 hover:bg-red-300 rounded-[6px]"
+                        className="ease ml-2 flex h-[30px] w-[30px] cursor-pointer items-center justify-center rounded-[6px] bg-red-400 p-[4px] transition-colors duration-[0.3s] hover:bg-red-300"
                         type="button"
                         onClick={() => {
                           setSelectedServices(prev =>
@@ -363,7 +363,7 @@ export const AppointmentsMaintenance = () => {
             </Table>
           </div>
           {selectedServices.length === 0 && (
-            <div className="text-gray-600 m-0 p-2 bg-gray-100 font-semibold text-lg text-center">
+            <div className="m-0 bg-gray-100 p-2 text-center text-lg font-semibold text-gray-600">
               Nenhum serviço selecionado
             </div>
           )}
@@ -371,16 +371,16 @@ export const AppointmentsMaintenance = () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex gap-2 self-end mt-40 mr-30"
+          className="mt-40 mr-30 flex gap-2 self-end"
         >
           <button
-            className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
+            className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-red-400 transition-colors duration-[0.3s] hover:bg-red-300"
             type="button"
           >
             <FaCircleXmark size={20} color="white" />
           </button>
           <button
-            className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-green-300 hover:bg-green-200 rounded-[6px]"
+            className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-green-300 transition-colors duration-[0.3s] hover:bg-green-200"
             type="submit"
           >
             <FaCircleCheck size={20} color="white" />

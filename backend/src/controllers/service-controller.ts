@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import Service from '../database/mongo/models/service';
+import { Service } from '../database/mysql/models/services';
 
 export const serviceController = {
   async findAll(req: Request, res: Response): Promise<any> {
     try {
-      const services = await Service.find({});
+      const services = await Service.findAll({});
       if (!services) return res.status(204).send();
 
       return res.json(services);
@@ -22,7 +22,7 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: 'Provide an ID to be found' });
 
-      const service = await Service.findById(id);
+      const service = await Service.findByPk(id);
       if (!service) return res.status(204).send();
 
       return res.json(service);
@@ -50,13 +50,7 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: 'Provide an ID for the update' });
 
-      await Service.updateOne(
-        {
-          _id: id,
-        },
-        req.body,
-        { strict: true }
-      );
+      await Service.update(req.body, { where: { id } });
 
       return res.status(200).send({});
     } catch (err) {
@@ -72,8 +66,8 @@ export const serviceController = {
       if (!id)
         return res.status(400).send({ error: 'Provide the ID to be deleted' });
 
-      await Service.deleteOne({
-        _id: id,
+      await Service.destroy({
+        where: { id },
       });
 
       return res.status(200).send({});

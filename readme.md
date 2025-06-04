@@ -11,24 +11,37 @@ Sistema de agendamento de consultas odontológicas, com gerenciamento de cliente
 ## Execução do projeto
 
 1. É necessário instalar as dependências na raiz, backend e frontend:
-   ```
+   ```bash
    npm install
    cd backend && npm install
    cd ../frontend && npm install
    ```
-2. Inicie o servidor do mongo na porta padrão 27017, e o servidor do MySql na porta padrão 3306
-
-3. Inicie o backend:
+2. Configure as seguintes variáveis de ambiente:
 
    ```
+   PORT
+   MONGO_CONNECTION_STRING
+   MYSQL_CONNECTION_STRING
+   ACCESS_TOKEN_SECRET
+   ADMIN_PASSWORD
+   TEST_USER_PASSWORD
+   ```
+
+3. Inicie o servidor do mongo e o servidor do MySql
+
+4. Inicie o backend:
+
+   ```bash
    cd backend
+   npx sequelize-cli db:migrate
+   npx sequelize-cli db:seed:all
    npm run dev
    ```
 
    O backend irá rodar em `http://localhost:3001`.
 
-4. Inicie o frontend:
-   ```
+5. Inicie o frontend:
+   ```bash
    cd frontend
    npm run dev
    ```

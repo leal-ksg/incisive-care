@@ -37,34 +37,34 @@ export const AppointmentsInfo = () => {
   }, []);
 
   return (
-    <div className="absolute flex gap-11 items-center top-62 bg-white rounded-xl shadow-[0px_0px_14px_1px_rgba(0,0,0,0.08)] w-[80%] h-40 px-12 py-5">
+    <div className="absolute top-62 flex h-40 w-[80%] items-center gap-11 rounded-xl bg-white px-12 py-5 shadow-[0px_0px_14px_1px_rgba(0,0,0,0.08)]">
       <div className="text-center">
-        <h3 className="text-[#00AEC7] font-bold text-2xl">Agendamentos</h3>
+        <h3 className="text-2xl font-bold text-[#00AEC7]">Agendamentos</h3>
       </div>
 
-      <div className=" flex gap-2 w-full h-full">
-        <div className="flex border-2 border-gray-300 rounded-lg bg-[#F4F4F4] w-full h-full">
-          <div className="flex flex-col items-center justify-evenly w-1/3 h-full border-r-2 border-gray-300">
-            <h4 className="text-[#00AEC7] text-lg font-semibold">Em aberto</h4>
-            <span className="font-semibold text-4xl text-amber-300">
+      <div className="flex h-full w-full gap-2">
+        <div className="flex h-full w-full rounded-lg border-2 border-gray-300 bg-[#F4F4F4]">
+          <div className="flex h-full w-1/3 flex-col items-center justify-evenly border-r-2 border-gray-300">
+            <h4 className="text-lg font-semibold text-[#00AEC7]">Em aberto</h4>
+            <span className="text-4xl font-semibold text-amber-300">
               {scheduled && scheduled.length ? scheduled[0].total : 0}
             </span>
           </div>
-          <div className="flex flex-col items-center justify-evenly w-1/3 h-full border-r-2 border-gray-300">
-            <h4 className="text-[#00AEC7] text-lg font-semibold">Concluídos</h4>
-            <span className="font-semibold text-4xl text-green-300">
+          <div className="flex h-full w-1/3 flex-col items-center justify-evenly border-r-2 border-gray-300">
+            <h4 className="text-lg font-semibold text-[#00AEC7]">Concluídos</h4>
+            <span className="text-4xl font-semibold text-green-300">
               {completed && completed.length ? completed[0].total : 0}
             </span>
           </div>
-          <div className="flex flex-col items-center justify-evenly w-1/3 h-full">
-            <h4 className="text-[#00AEC7] text-lg font-semibold">Cancelados</h4>
-            <span className="font-semibold text-4xl text-red-400">
+          <div className="flex h-full w-1/3 flex-col items-center justify-evenly">
+            <h4 className="text-lg font-semibold text-[#00AEC7]">Cancelados</h4>
+            <span className="text-4xl font-semibold text-red-400">
               {cancelled && cancelled.length ? cancelled[0].total : 0}
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-around border-2 border-gray-300 rounded-lg bg-[#F4F4F4] w-18 h-full text-[#00AEC7]">
+        <div className="flex h-full w-18 flex-col items-center justify-around rounded-lg border-2 border-gray-300 bg-[#F4F4F4] text-[#00AEC7]">
           <button
             type="button"
             className="cursor-pointer"

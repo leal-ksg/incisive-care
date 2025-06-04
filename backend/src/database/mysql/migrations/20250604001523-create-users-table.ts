@@ -1,6 +1,6 @@
-import { QueryInterface, DataTypes } from 'sequelize';
+import { DataTypes, QueryInterface } from 'sequelize';
 
-export async function up(queryInterface: QueryInterface): Promise<void> {
+export async function up(queryInterface: QueryInterface) {
   await queryInterface.createTable('Users', {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -16,6 +16,9 @@ export async function up(queryInterface: QueryInterface): Promise<void> {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -24,23 +27,9 @@ export async function up(queryInterface: QueryInterface): Promise<void> {
     role: {
       type: DataTypes.ENUM('admin', 'dentist'),
     },
-    teste: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   });
 }
 
-export async function down(queryInterface: QueryInterface): Promise<void> {
+export async function down(queryInterface: QueryInterface) {
   await queryInterface.dropTable('Users');
 }

@@ -61,7 +61,7 @@ export const PatientsMaintenance = () => {
   );
 
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex h-full w-full flex-col">
       <Toolbar />
       <PageTitle
         title={
@@ -69,16 +69,16 @@ export const PatientsMaintenance = () => {
         }
         backPath="/patients"
       />
-      <div className="flex flex-col p-6 items-center w-full h-full">
+      <div className="flex h-full w-full flex-col items-center p-6">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-10 w-[60%] mt-8"
+          className="mt-8 flex w-[60%] flex-col gap-10"
         >
-          <div className="flex items-end gap-3 w-full justify-center">
-            <div className="relative flex flex-col w-1/3">
+          <div className="flex w-full items-end justify-center gap-3">
+            <div className="relative flex w-1/3 flex-col">
               <label htmlFor="cpf">CPF</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="text"
                 {...register('cpf', {
                   onChange: e => {
@@ -88,21 +88,21 @@ export const PatientsMaintenance = () => {
                 })}
               />
               {errors.cpf && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.cpf.message}
                 </span>
               )}
             </div>
 
-            <div className="relative flex flex-col w-full">
+            <div className="relative flex w-full flex-col">
               <label htmlFor="name">Nome</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="text"
                 {...register('name')}
               />
               {errors.name && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.name.message}
                 </span>
               )}
@@ -110,10 +110,10 @@ export const PatientsMaintenance = () => {
           </div>
 
           <div className="flex gap-3">
-            <div className="relative flex flex-col w-1/2">
+            <div className="relative flex w-1/2 flex-col">
               <label htmlFor="phone">Telefone</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="text"
                 {...register('phone', {
                   onChange: e => {
@@ -123,36 +123,36 @@ export const PatientsMaintenance = () => {
                 })}
               />
               {errors.phone && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.phone.message}
                 </span>
               )}
             </div>
 
-            <div className="relative flex flex-col w-1/2">
+            <div className="relative flex w-1/2 flex-col">
               <label htmlFor="dateOfBirth">Data de nascimento</label>
               <input
-                className="w-full p-3 bg-[#F3F3F3] h-[36px] rounded-md border-2 text-sm focus:outline-0 focus:border-gray-400 transition-colors ease duration-[0.2s]"
+                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
                 type="date"
                 {...register('dateOfBirth')}
               />
               {errors.dateOfBirth && (
-                <span className="absolute top-[100%] text-destructive font-semibold">
+                <span className="text-destructive absolute top-[100%] font-semibold">
                   {errors.dateOfBirth.message}
                 </span>
               )}
             </div>
           </div>
-          <div className="flex gap-2 fixed bottom-30 right-40">
+          <div className="fixed right-40 bottom-30 flex gap-2">
             <button
               onClick={() => navigate('/patients')}
-              className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-red-400 hover:bg-red-300 rounded-[6px]"
+              className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-red-400 transition-colors duration-[0.3s] hover:bg-red-300"
               type="button"
             >
               <FaCircleXmark size={20} color="white" />
             </button>
             <button
-              className="flex items-center justify-center cursor-pointer  w-[40px] h-[35px] transition-colors ease duration-[0.3s] bg-green-300 hover:bg-green-200 rounded-[6px]"
+              className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-green-300 transition-colors duration-[0.3s] hover:bg-green-200"
               type="submit"
             >
               <FaCircleCheck size={20} color="white" />

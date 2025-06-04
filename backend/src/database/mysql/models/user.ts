@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '..';
 
-export const User = sequelize.define('user', {
+export const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
     primaryKey: true,
@@ -26,9 +26,5 @@ export const User = sequelize.define('user', {
   },
   role: {
     type: DataTypes.ENUM('admin', 'dentist'),
-  },
-  teste: {
-    type: DataTypes.STRING,
-    allowNull: true,
   },
 });
