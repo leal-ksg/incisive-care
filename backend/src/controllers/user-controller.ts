@@ -75,8 +75,15 @@ export const userController = {
   async update(req: Request, res: Response): Promise<any> {
     try {
       const { id } = req.params;
+
       if (!id)
         return res.status(400).send({ error: 'Provide an ID for the update' });
+
+      if (!req.body.password) {
+        delete req.body.password;
+      } else {
+        req.body.password = await bcrypt.hash(req.body.password, saltRounds);
+      }
 
       await User.update(req.body, { where: { id } });
 

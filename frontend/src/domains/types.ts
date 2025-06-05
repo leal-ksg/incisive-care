@@ -59,3 +59,10 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface UserFormData {
+  name: string;
+  email: string;
+  password?: string;
+  role: string;
+}

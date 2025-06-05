@@ -2,7 +2,7 @@ import { isAxiosError } from 'axios';
 import { api } from '../api';
 import { errorToast, successToast } from '@/lib/toast-styles';
 import { toast } from 'sonner';
-import { UserFormData } from '@/components/pages/users/maintenance';
+import { UserFormData } from '@/domains/types';
 
 export const createUser = async (user: UserFormData): Promise<boolean> => {
   try {

@@ -1,37 +1,58 @@
 import { PageTitle } from '@/components/page-title';
 import Toolbar from '@/components/toolbar';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { useCallback, useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
-import { InferType } from 'yup';
-import { User } from '@/domains/types';
+import { User, UserFormData } from '@/domains/types';
 import { createUserSchema } from '../../../../../../common/validation/user/create-user-schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createUser } from '@/services/users/create-user';
 import { updateUser } from '@/services/users/update-user';
-
-export type UserFormData = InferType<typeof createUserSchema>;
+import { toast } from 'sonner';
+import { errorToast } from '@/lib/toast-styles';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 export const UsersMaintenance = () => {
   const [user, setUser] = useState<User>();
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const { action } = useParams();
-  const { register, handleSubmit, setValue, formState, reset } =
-    useForm<UserFormData>({
-      resolver: yupResolver(createUserSchema),
-    });
+  const { register, handleSubmit, formState, reset, control } = useForm({
+    resolver: yupResolver(createUserSchema, {}),
+    context: {
+      isEdit: action === 'edit',
+    },
+    defaultValues: {
+      name: '',
+      email: '',
+      role: 'dentist',
+      password: '',
+    },
+  });
   const { errors } = formState;
 
   const navigate = useNavigate();
+  const roles = useMemo(
+    () => [
+      { label: 'Administrador', value: 'admin' },
+      { label: 'Dentista', value: 'dentist' },
+    ],
+    []
+  );
 
   useEffect(() => {
     const fillDefaultValues = () => {
       const selectedUser: User = JSON.parse(
         localStorage.getItem('selectedUser')!
       );
-
       const { email, name, role } = selectedUser;
 
       reset({
@@ -44,10 +65,20 @@ export const UsersMaintenance = () => {
     };
 
     if (action === 'edit') fillDefaultValues();
-  }, [action, setValue]);
+  }, [action, reset]);
 
   const onSubmit = useCallback(
     async (data: UserFormData) => {
+      if (data.password) {
+        if (data.password !== passwordConfirmation) {
+          toast('As senhas não são iguais', {
+            duration: 3000,
+            style: errorToast,
+          });
+          return;
+        }
+      }
+
       if (action === 'new') {
         await createUser({
           ...data,
@@ -57,7 +88,7 @@ export const UsersMaintenance = () => {
         await updateUser({ ...data, id: user.id });
       }
     },
-    [action, user]
+    [action, user, passwordConfirmation, navigate]
   );
 
   return (
@@ -90,11 +121,24 @@ export const UsersMaintenance = () => {
             </div>
 
             <div className="relative flex w-1/2 flex-col">
-              <label htmlFor="role">Role</label>
-              <input
-                className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
-                type="text"
-                {...register('role')}
+              <label htmlFor="role">Função</label>
+              <Controller
+                name="role"
+                control={control}
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger className="w-full rounded-md border-2 bg-[#F3F3F3]">
+                      <SelectValue placeholder="Escolha uma opção" />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-md border-2">
+                      {roles.map(role => (
+                        <SelectItem key={role.value} value={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               />
               {errors.role && (
                 <span className="text-destructive absolute top-[100%] font-semibold">
@@ -123,7 +167,7 @@ export const UsersMaintenance = () => {
               <label htmlFor="password">Senha</label>
               <input
                 className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
-                type="text"
+                type="password"
                 {...register('password')}
               />
               {errors.password && (
@@ -137,8 +181,9 @@ export const UsersMaintenance = () => {
               <label htmlFor="passwordConfirmation">Confirme a senha</label>
               <input
                 className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
-                type="text"
+                type="password"
                 name="passwordConfirmation"
+                onChange={e => setPasswordConfirmation(e.target.value)}
               />
             </div>
           </div>

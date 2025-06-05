@@ -89,7 +89,7 @@ export const Users = () => {
                     <TableCell className="w-[33%]">{user?.email}</TableCell>
 
                     <TableCell className="w-[14.5%]">
-                      {user?.role?.toUpperCase()}
+                      {user?.role === 'admin' ? 'ADMIN' : 'DENTISTA'}
                     </TableCell>
 
                     <TableCell className="w-[12%]">
@@ -104,10 +104,10 @@ export const Users = () => {
                         type="button"
                         onClick={() => {
                           localStorage.setItem(
-                            'selectedPatient',
+                            'selectedUser',
                             JSON.stringify(user)
                           );
-                          navigate('/patients/edit');
+                          navigate('/users/edit');
                         }}
                       >
                         <FaPen color="white" />

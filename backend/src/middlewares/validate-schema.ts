@@ -10,7 +10,11 @@ export const validateSchema = async (
   schema: ObjectSchema<any>
 ): Promise<any> => {
   try {
-    req.body = await schema.validate(req.body);
+    req.body = await schema.validate(req.body, {
+      context: {
+        isEdit: req.method === 'PUT',
+      },
+    });
     next();
   } catch (error) {
     return res.status(400).json({
