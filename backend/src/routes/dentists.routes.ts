@@ -6,15 +6,15 @@ import { createDentistSchema } from '../../../common/validation/dentist/create-d
 
 const router = Router();
 
-router.get('/dentists', auth, dentistController.findAll);
-router.get('/dentists/:id', auth, dentistController.findOne);
+router.get('/', auth, dentistController.findAll);
+router.get('/:id', auth, dentistController.findOne);
 router.post(
-  '/dentists',
+  '/',
   auth,
   (req, res, next) => validateSchema(req, res, next, createDentistSchema),
   dentistController.create
 );
-router.put('/dentists/:id', auth, dentistController.update);
-router.delete('/dentists/:id', auth, dentistController.delete);
+router.put('/:id', auth, dentistController.update);
+router.delete('/:id', auth, dentistController.delete);
 
 export default router

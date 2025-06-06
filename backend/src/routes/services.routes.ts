@@ -6,15 +6,15 @@ import { createServiceSchema } from '../../../common/validation/service/create-s
 
 const router = Router();
 
-router.get('/services', auth, serviceController.findAll);
-router.get('/services/:id', auth, serviceController.findOne);
+router.get('/', auth, serviceController.findAll);
+router.get('/:id', auth, serviceController.findOne);
 router.post(
-  '/services',
+  '/',
   auth,
   (req, res, next) => validateSchema(req, res, next, createServiceSchema),
   serviceController.create
 );
-router.put('/services/:id', auth, serviceController.update);
-router.delete('/services/:id', auth, serviceController.delete);
+router.put('/:id', auth, serviceController.update);
+router.delete('/:id', auth, serviceController.delete);
 
 export default router

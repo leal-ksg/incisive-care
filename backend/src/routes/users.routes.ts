@@ -6,15 +6,15 @@ import { createUserSchema } from '../../../common/validation/user/create-user-sc
 
 const router = Router();
 
-router.get('/users', auth, userController.findAll);
-router.get('/users/:id', auth, userController.findOne);
-router.post('/users/login', userController.login);
+router.get('/', auth, userController.findAll);
+router.get('/:id', auth, userController.findOne);
+router.post('/login', userController.login);
 router.post(
-  '/users',
+  '/',
   (req, res, next) => validateSchema(req, res, next, createUserSchema),
   userController.create
 );
-router.put('/users/:id', auth, userController.update);
-router.delete('/users/:id', auth, userController.delete);
+router.put('/:id', auth, userController.update);
+router.delete('/:id', auth, userController.delete);
 
 export default router

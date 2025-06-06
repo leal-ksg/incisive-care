@@ -6,20 +6,20 @@ import { createAppointmentSchema } from '../../../common/validation/appointment/
 
 const router = Router();
 
-router.get('/appointments', auth, appointmentController.findAll);
+router.get('/', auth, appointmentController.findAll);
 router.get(
-  '/appointments/count',
+  '/count',
   auth,
   appointmentController.getAppointmentsCount
 );
-router.get('/appointments/:id', auth, appointmentController.findOne);
+router.get('/:id', auth, appointmentController.findOne);
 router.post(
-  '/appointments',
+  '/',
   auth,
   (req, res, next) => validateSchema(req, res, next, createAppointmentSchema),
   appointmentController.create
 );
-router.put('/appointments/:id', auth, appointmentController.update);
-router.delete('/appointments/:id', auth, appointmentController.delete);
+router.put('/:id', auth, appointmentController.update);
+router.delete('/:id', auth, appointmentController.delete);
 
 export default router;
