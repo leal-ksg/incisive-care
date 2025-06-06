@@ -27,6 +27,14 @@ export async function up(queryInterface: QueryInterface) {
     role: {
       type: DataTypes.ENUM('admin', 'dentist'),
     },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
   });
 }
 

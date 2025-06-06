@@ -30,8 +30,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-    } else {
-      localStorage.clear();
     }
 
     const token = localStorage.getItem('accessToken');
@@ -73,6 +71,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.clear();
     setUser(undefined);
 
+    api.defaults.headers['Authorization'] = '';
     navigate('/login');
   }, []);
 

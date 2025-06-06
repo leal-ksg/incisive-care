@@ -18,6 +18,7 @@ import { deleteAppointment } from '@/services/appointments/delete-appointment';
 export const Appointments = () => {
   const [shouldReload, setShoudReload] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [appointmentServices, setAppointmentServices] = 
 
   const navigate = useNavigate();
 

@@ -21,8 +21,7 @@ export const appointmentSchema = new mongoose.Schema(
     },
     services: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Service',
+        type: mongoose.Schema.Types.String,
         required: true,
       },
     ],

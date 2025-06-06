@@ -6,7 +6,6 @@ export const appointmentController = {
   async findAll(req: Request, res: Response): Promise<any> {
     try {
       const appointments = await Appointment.find().populate([
-        'services',
         'patient',
         'dentist',
       ]);
@@ -26,7 +25,7 @@ export const appointmentController = {
       if (!id)
         return res.status(400).send({ error: 'Provide an ID to be found' });
 
-      const appointment = await Appointment.findById(id).populate(['services']);
+      const appointment = await Appointment.findById(id);
       if (!appointment) return res.status(204).send();
 
       return res.json(appointment);

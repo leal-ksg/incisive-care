@@ -2,7 +2,6 @@ export interface AppointmentDTO {
   patient: string;
   dentist: string;
   date: Date;
-  services: string[];
 }
 
 export interface Service {
@@ -10,7 +9,7 @@ export interface Service {
   category: string;
   duration: number;
   unitAmount: number;
-  id: string;
+  id: number;
 }
 
 export interface Patient {
@@ -34,7 +33,6 @@ export interface Appointment {
   dentist: Dentist;
   date: Date;
   status: string;
-  services: Service[];
   id: string;
 }
 
@@ -65,4 +63,14 @@ export interface UserFormData {
   email: string;
   password?: string;
   role: string;
+}
+
+export interface AppointmentServicesDTO {
+  appointmentId: string;
+  services: ServiceDTO[];
+}
+
+export interface ServiceDTO {
+  serviceId: number;
+  unityAmount: number;
 }

@@ -23,7 +23,7 @@ export const Service = sequelize.define(
       allowNull: false,
     },
     unitAmount: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false,
     },
   },

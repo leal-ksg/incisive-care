@@ -1,9 +1,9 @@
-import 'ts-node/register';
+require('ts-node').register();
 
-const config = {
+module.exports = {
   development: {
     username: 'root',
-    password: '123456',
+    password: null,
     database: 'incisive_care',
     host: 'localhost',
     dialect: 'mysql',
@@ -23,5 +23,3 @@ const config = {
     dialect: 'mysql',
   },
 };
-
-export default config;

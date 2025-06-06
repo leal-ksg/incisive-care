@@ -1,22 +1,12 @@
 import { DataTypes, QueryInterface } from 'sequelize';
 
 export async function up(queryInterface: QueryInterface) {
-  await queryInterface.createTable('Services', {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    description: {
+  await queryInterface.createTable('AppointmentServices', {
+    appointmentId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    duration: {
+    serviceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -28,5 +18,5 @@ export async function up(queryInterface: QueryInterface) {
 }
 
 export async function down(queryInterface: QueryInterface) {
-  await queryInterface.dropTable('Services');
+  await queryInterface.dropTable('AppointmentServices');
 }

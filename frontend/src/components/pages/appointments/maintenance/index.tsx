@@ -39,7 +39,6 @@ import { errorToast } from '@/lib/toast-styles';
 import { createAppointment } from '@/services/appointments/create-appointment';
 import { formatToDatetime } from '@/lib/format-to-datetime';
 import { updateAppointment } from '@/services/appointments/update-appointment';
-import { InferType } from 'yup';
 
 export const AppointmentsMaintenance = () => {
   const [appointmentId, setAppointmentId] = useState<string>();
@@ -50,8 +49,12 @@ export const AppointmentsMaintenance = () => {
 
   const { action } = useParams();
   const { register, handleSubmit, setValue, control, watch, formState } =
-    useForm<InferType<typeof appointmentSchema>>({
+    useForm<AppointmentsFormData>({
       resolver: yupResolver(appointmentSchema),
+      defaultValues: {
+        dentistId: '',
+        service: '',
+      },
     });
   const { errors } = formState;
 
@@ -113,11 +116,15 @@ export const AppointmentsMaintenance = () => {
   }, [patientCPF, setValue]);
 
   const handleServiceSelection = () => {
+    console.log(serviceId);
+    console.log(services);
     if (!serviceId) return;
 
     const selectedService = services.filter(
-      service => service.id === serviceId
+      service => service.id === +serviceId
     );
+
+    console.log(selectedService);
 
     setSelectedServices(prev => [...prev, ...selectedService]);
   };
@@ -146,11 +153,10 @@ export const AppointmentsMaintenance = () => {
         date: data.date,
         dentist: data.dentistId,
         patient: patient.id,
-        services: selectedServices.map(service => service.id),
       };
 
       if (action === 'new') {
-        await createAppointment(appointment);
+        const newAppointment =  await createAppointment(appointment);
       } else {
         await updateAppointment(appointmentId!, appointment);
       }
@@ -271,7 +277,10 @@ export const AppointmentsMaintenance = () => {
                         {services && services.length ? (
                           services?.map(service => {
                             return (
-                              <SelectItem key={service.id} value={service.id}>
+                              <SelectItem
+                                key={service.id}
+                                value={service.id.toString()}
+                              >
                                 {service.description}
                               </SelectItem>
                             );
