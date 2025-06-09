@@ -39,6 +39,8 @@ import { errorToast } from '@/lib/toast-styles';
 import { createAppointment } from '@/services/appointments/create-appointment';
 import { formatToDatetime } from '@/lib/format-to-datetime';
 import { updateAppointment } from '@/services/appointments/update-appointment';
+import { updateAppointmentAndServiceConnection } from '@/services/appointments/update-appointment-and-service-connection';
+import { createAppointmentAndServiceConnection } from '@/services/appointments/create-appointment-and-service-connection copy';
 
 export const AppointmentsMaintenance = () => {
   const [appointmentId, setAppointmentId] = useState<string>();
@@ -53,7 +55,6 @@ export const AppointmentsMaintenance = () => {
       resolver: yupResolver(appointmentSchema),
       defaultValues: {
         dentistId: '',
-        service: '',
       },
     });
   const { errors } = formState;
@@ -116,15 +117,11 @@ export const AppointmentsMaintenance = () => {
   }, [patientCPF, setValue]);
 
   const handleServiceSelection = () => {
-    console.log(serviceId);
-    console.log(services);
     if (!serviceId) return;
 
     const selectedService = services.filter(
       service => service.id === +serviceId
     );
-
-    console.log(selectedService);
 
     setSelectedServices(prev => [...prev, ...selectedService]);
   };
@@ -156,9 +153,19 @@ export const AppointmentsMaintenance = () => {
       };
 
       if (action === 'new') {
-        const newAppointment =  await createAppointment(appointment);
+        const newAppointment = await createAppointment(appointment);
+
+        await createAppointmentAndServiceConnection(
+          newAppointment.id,
+          selectedServices
+        );
       } else {
         await updateAppointment(appointmentId!, appointment);
+
+        await updateAppointmentAndServiceConnection(
+          appointmentId!,
+          selectedServices
+        );
       }
     },
     [action, appointmentId, patient, selectedServices]
@@ -213,7 +220,10 @@ export const AppointmentsMaintenance = () => {
                 control={control}
                 render={({ field }) => {
                   return (
-                    <Select value={field.value} onValueChange={field.onChange}>
+                    <Select
+                      value={field.value?.toString() ?? ''}
+                      onValueChange={field.onChange}
+                    >
                       <SelectTrigger className="w-full rounded-md border-2 bg-[#F3F3F3] text-sm focus:border-gray-400 focus:outline-0">
                         <SelectValue placeholder="Escolha um dentista" />
                       </SelectTrigger>
@@ -267,7 +277,7 @@ export const AppointmentsMaintenance = () => {
                 render={({ field }) => {
                   return (
                     <Select
-                      value={field.value as string}
+                      value={field.value?.toString() ?? ''}
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger className="w-full rounded-md border-2 bg-[#F3F3F3] text-sm focus:border-gray-400 focus:outline-0">

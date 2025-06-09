@@ -7,11 +7,7 @@ import { createAppointmentSchema } from '../../../common/validation/appointment/
 const router = Router();
 
 router.get('/', auth, appointmentController.findAll);
-router.get(
-  '/count',
-  auth,
-  appointmentController.getAppointmentsCount
-);
+router.get('/count', auth, appointmentController.getAppointmentsCount);
 router.get('/:id', auth, appointmentController.findOne);
 router.post(
   '/',

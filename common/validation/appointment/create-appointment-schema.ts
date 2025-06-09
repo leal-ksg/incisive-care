@@ -17,8 +17,4 @@ export const createAppointmentSchema = Yup.object().shape({
         return date >= today;
       }
     ),
-  services: Yup.array()
-    .of(Yup.string().required("Selecione um serviço"))
-    .min(1, "Selecione pelo menos um serviço")
-    .required("Selecione pelo menos um serviço"),
 });

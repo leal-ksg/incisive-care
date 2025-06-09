@@ -17,4 +17,4 @@ router.post(
 router.put('/:id', auth, serviceController.update);
 router.delete('/:id', auth, serviceController.delete);
 
-export default router
+export default router;

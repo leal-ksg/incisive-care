@@ -4,7 +4,7 @@ import { AppointmentService } from '../database/mysql/models/appointment-service
 import { AppointmentServicesDTO } from '../types';
 
 export const appointmentServicesController = {
-  async findOne(req: Request, res: Response): Promise<any> {
+  async findAll(req: Request, res: Response): Promise<any> {
     try {
       const { appointmentId } = req.params;
       if (!appointmentId)

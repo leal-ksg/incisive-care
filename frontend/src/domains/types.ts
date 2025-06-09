@@ -42,11 +42,11 @@ export interface AppointmentsCount {
 }
 
 export interface AppointmentsFormData {
-  patientName: string | null | undefined;
-  service: string | null | undefined;
   patientCPF: string;
+  patientName?: string | null;
   dentistId: string;
   date: Date;
+  service: number;
 }
 
 export interface User {
