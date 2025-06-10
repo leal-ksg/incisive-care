@@ -3,7 +3,7 @@ import { api } from '../api';
 import { errorToast, successToast } from '@/lib/toast-styles';
 import { toast } from 'sonner';
 
-export const deleteService = async (id: string): Promise<boolean> => {
+export const deleteService = async (id: number): Promise<boolean> => {
   try {
     await api.delete(`/services/${id}`);
 

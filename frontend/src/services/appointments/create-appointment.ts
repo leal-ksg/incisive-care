@@ -8,17 +8,14 @@ export const createAppointment = async (
   appointment: AppointmentDTO
 ): Promise<Appointment> => {
   try {
-    const newAppointment: Appointment = await api.post(
-      `/appointments/`,
-      appointment
-    );
+    const response = await api.post(`/appointments/`, appointment);
 
     toast('Agendamento marcado!', {
       duration: 3000,
       style: successToast,
     });
 
-    return newAppointment;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       toast('Não foi possível marcar o agendamento...', {

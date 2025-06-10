@@ -6,10 +6,5 @@ export interface User {
 
 export interface AppointmentServicesDTO {
   appointmentId: string;
-  services: Service[];
-}
-
-export interface Service {
-  serviceId: number;
-  unityAmount: number;
+  services: number[];
 }

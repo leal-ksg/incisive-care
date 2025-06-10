@@ -23,5 +23,5 @@ export const appointmentSchema: Yup.ObjectSchema<AppointmentsFormData> =
           return today <= date;
         }
       ),
-    service: Yup.number().required('Campo obrigatório'),
+    service: Yup.number().nullable().default(null),
   });

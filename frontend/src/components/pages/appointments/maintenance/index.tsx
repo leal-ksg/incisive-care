@@ -40,7 +40,7 @@ import { createAppointment } from '@/services/appointments/create-appointment';
 import { formatToDatetime } from '@/lib/format-to-datetime';
 import { updateAppointment } from '@/services/appointments/update-appointment';
 import { updateAppointmentAndServiceConnection } from '@/services/appointments/update-appointment-and-service-connection';
-import { createAppointmentAndServiceConnection } from '@/services/appointments/create-appointment-and-service-connection copy';
+import { createAppointmentAndServiceConnection } from '@/services/appointments/create-appointment-and-service-connection';
 
 export const AppointmentsMaintenance = () => {
   const [appointmentId, setAppointmentId] = useState<string>();
@@ -80,7 +80,7 @@ export const AppointmentsMaintenance = () => {
   }, [action, setValue]);
 
   useEffect(() => {
-    const fillDefaultValues = () => {
+    const fillDefaultValues = async () => {
       const selectedAppointment = JSON.parse(
         localStorage.getItem('selectedAppointment')!
       );
@@ -94,8 +94,9 @@ export const AppointmentsMaintenance = () => {
       setValue('patientCPF', selectedAppointment.patient.cpf);
       setValue('patientName', selectedAppointment.patient.name);
 
-      setSelectedServices(selectedAppointment.services);
       setAppointmentId(selectedAppointment.id);
+
+      setSelectedServices(selectedAppointment.services);
     };
 
     if (action === 'edit') fillDefaultValues();
@@ -339,10 +340,10 @@ export const AppointmentsMaintenance = () => {
             </TableHeader>
           </Table>
 
-          <div className="custom-scrollbar max-h-[500px] overflow-y-auto">
+          <div className="custom-scrollbar max-h-[180px] overflow-y-auto">
             <Table className="rounded-t-4 justify-self-center">
               <TableBody>
-                {selectedServices.map((row, index) => (
+                {selectedServices?.map((row, index) => (
                   <TableRow
                     className={`flex text-base font-semibold text-gray-600 ${
                       index % 2 === 0 ? 'bg-[#EFFCFF]' : 'bg-[#C7D8DA]'
@@ -381,7 +382,7 @@ export const AppointmentsMaintenance = () => {
               </TableBody>
             </Table>
           </div>
-          {selectedServices.length === 0 && (
+          {selectedServices?.length === 0 && (
             <div className="m-0 bg-gray-100 p-2 text-center text-lg font-semibold text-gray-600">
               Nenhum serviço selecionado
             </div>
@@ -390,7 +391,7 @@ export const AppointmentsMaintenance = () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mt-40 mr-30 flex gap-2 self-end"
+          className="sticky bottom-55 mt-20 mr-30 flex gap-2 self-end"
         >
           <button
             className="ease flex h-[35px] w-[40px] cursor-pointer items-center justify-center rounded-[6px] bg-red-400 transition-colors duration-[0.3s] hover:bg-red-300"

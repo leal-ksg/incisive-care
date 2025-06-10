@@ -1,6 +1,6 @@
 import { PageTitle } from '@/components/page-title';
 import Toolbar from '@/components/toolbar';
-import { Appointment } from '@/domains/types';
+import { Appointment, Service } from '@/domains/types';
 import { getAppointments } from '@/services/appointments/get-appointments';
 import { useEffect, useState } from 'react';
 import {
@@ -14,11 +14,13 @@ import {
 import { FaPlusCircle, FaPen, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { deleteAppointment } from '@/services/appointments/delete-appointment';
+import { getAppointmentServices } from '@/services/appointments/get-appointment-services';
 
 export const Appointments = () => {
   const [shouldReload, setShoudReload] = useState(false);
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  // const [appointmentServices, setAppointmentServices] = 
+  const [appointments, setAppointments] = useState<
+    (Appointment & { totalAmount: number; services: Service[] })[]
+  >([]);
 
   const navigate = useNavigate();
 
@@ -26,7 +28,27 @@ export const Appointments = () => {
     const fetchAppointments = async () => {
       const response = await getAppointments();
 
-      setAppointments(response);
+      const appointmentsWithTotals = await Promise.all(
+        response.map(async appointment => {
+          const services = await getAppointmentServices(appointment.id);
+
+          const totalAmount =
+            services && services.length
+              ? services?.reduce(
+                  (acc, service) => acc + Number(service.unitAmount),
+                  0
+                )
+              : 0;
+
+          return {
+            ...appointment,
+            totalAmount,
+            services,
+          };
+        })
+      );
+
+      setAppointments(appointmentsWithTotals);
     };
 
     fetchAppointments();
@@ -79,7 +101,7 @@ export const Appointments = () => {
             </TableHeader>
           </Table>
 
-          <div className="custom-scrollbar max-h-[500px] overflow-y-auto">
+          <div className="custom-scrollbar max-h-[400px] overflow-y-auto">
             <Table className="rounded-t-4 justify-self-center">
               <TableBody>
                 {appointments.map((appointment, index) => (
@@ -101,13 +123,13 @@ export const Appointments = () => {
                     </TableCell>
 
                     <TableCell className="w-[20%]">
-                      {appointment?.services?.reduce((acc, service) => {
-                        return acc + service.unitAmount;
-                      }, 0)}
+                      {appointment?.totalAmount}
                     </TableCell>
 
                     <TableCell className="w-[20%]">
-                      {appointment?.status}
+                      {appointment?.status === 'CANCELLED'
+                        ? 'CANCELADO'
+                        : 'PENDENTE'}
                     </TableCell>
 
                     <TableCell className="flex w-[10%] items-center justify-start">

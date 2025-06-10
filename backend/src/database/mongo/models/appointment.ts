@@ -19,12 +19,6 @@ export const appointmentSchema = new mongoose.Schema(
       default: 'SCHEDULED',
       required: true,
     },
-    services: [
-      {
-        type: mongoose.Schema.Types.String,
-        required: true,
-      },
-    ],
   },
   {
     toJSON: {

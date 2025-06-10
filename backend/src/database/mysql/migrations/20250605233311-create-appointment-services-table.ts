@@ -10,10 +10,6 @@ export async function up(queryInterface: QueryInterface) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    unitAmount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
   });
 }
 

@@ -75,7 +75,7 @@ export const Users = () => {
             </TableHeader>
           </Table>
 
-          <div className="custom-scrollbar max-h-[500px] overflow-y-auto">
+          <div className="custom-scrollbar max-h-[400px] overflow-y-auto">
             <Table className="rounded-t-4 justify-self-center">
               <TableBody>
                 {users.map((user, index) => (

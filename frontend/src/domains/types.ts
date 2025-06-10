@@ -46,7 +46,7 @@ export interface AppointmentsFormData {
   patientName?: string | null;
   dentistId: string;
   date: Date;
-  service: number;
+  service: number | null;
 }
 
 export interface User {
@@ -73,4 +73,11 @@ export interface AppointmentServicesDTO {
 export interface ServiceDTO {
   serviceId: number;
   unityAmount: number;
+}
+
+export interface AppointmentService {
+  id: number;
+  appointmentId: string;
+  serviceId: number;
+  unitAmount: number;
 }

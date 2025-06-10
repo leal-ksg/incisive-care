@@ -1,23 +1,20 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '..';
+import { DataTypes, Sequelize } from 'sequelize';
 
-export const AppointmentService = sequelize.define(
-  'AppointmentServices',
-  {
-    appointmentId: {
-      type: DataTypes.STRING,
-      allowNull: false,
+export const defineAppointmentServiceModel = (sequelize: Sequelize) => {
+  return sequelize.define(
+    'AppointmentServices',
+    {
+      appointmentId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      serviceId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
-    serviceId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    unitAmount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-  },
-  {
-    timestamps: false,
-  }
-);
+    {
+      timestamps: false,
+    }
+  );
+};

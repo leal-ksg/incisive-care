@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import { Service } from '../database/mysql/models/services';
+import { Service } from '../database/mysql/models';
 
 export const serviceController = {
   async findAll(req: Request, res: Response): Promise<any> {

@@ -31,7 +31,7 @@ export const Services = () => {
     fetchServices();
   }, [shouldReload]);
 
-  const handleServiceDelete = async (id: string) => {
+  const handleServiceDelete = async (id: number) => {
     const deleted = await deleteService(id);
 
     if (deleted) setShoudReload(prev => !prev);
@@ -75,7 +75,7 @@ export const Services = () => {
             </TableHeader>
           </Table>
 
-          <div className="custom-scrollbar max-h-[500px] overflow-y-auto">
+          <div className="custom-scrollbar max-h-[400px] overflow-y-auto">
             <Table className="rounded-t-4 justify-self-center">
               <TableBody>
                 {services?.map((service, index) => (

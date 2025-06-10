@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import { AppointmentService } from '../database/mysql/models/appointment-services';
 import { AppointmentServicesDTO } from '../types';
+import { AppointmentService, Service } from '../database/mysql/models';
 
 export const appointmentServicesController = {
   async findAll(req: Request, res: Response): Promise<any> {
@@ -12,11 +12,21 @@ export const appointmentServicesController = {
           .status(400)
           .send({ error: 'Provide an appointment to find its services' });
 
-      const services = await AppointmentService.findAll({
+      const appointmentServices = await AppointmentService.findAll({
         where: {
           appointmentId,
         },
+        include: [
+          {
+            model: Service,
+          },
+        ],
       });
+
+      const services = appointmentServices.map(
+        service => (service as any).Service
+      );
+
       if (!services.length) return res.status(204).send();
 
       return res.json(services);
@@ -31,9 +41,9 @@ export const appointmentServicesController = {
     const { appointmentId, services } = req.body as AppointmentServicesDTO;
 
     try {
-      const dataToInsert = services.map(service => ({
+      const dataToInsert = services.map(serviceId => ({
         appointmentId,
-        ...service,
+        serviceId,
       }));
 
       const createdServices = await AppointmentService.bulkCreate(dataToInsert);
@@ -55,9 +65,9 @@ export const appointmentServicesController = {
 
       await AppointmentService.destroy({ where: { appointmentId } });
 
-      const dataToInsert = services.map(service => ({
+      const dataToInsert = services.map(serviceId => ({
         appointmentId,
-        ...service,
+        serviceId,
       }));
       await AppointmentService.bulkCreate(dataToInsert);
 
