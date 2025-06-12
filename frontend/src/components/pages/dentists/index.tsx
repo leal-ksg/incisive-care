@@ -43,15 +43,12 @@ export const Dentists = () => {
       <PageTitle title="Dentistas" backPath="/" />
       <div className="flex h-full w-full justify-center p-6">
         <div className="relative mt-20 flex w-[70%] flex-col rounded-lg">
-          <div className="mb-2 flex items-center justify-center gap-2">
-            <input
-              className="ease h-[36px] w-full rounded-md border-2 bg-[#F3F3F3] p-3 text-sm transition-colors duration-[0.2s] focus:border-gray-400 focus:outline-0"
-              type="text"
-            />
+          <div className="mb-2 flex items-center justify-end gap-2">
             <button
               onClick={() => navigate('/dentists/new')}
-              className="ease flex cursor-pointer rounded-md bg-[#00AEC7] p-2 font-bold text-white transition-colors duration-[0.2s] hover:bg-[#63daec]"
+              className="ease flex cursor-pointer justify-between gap-4 rounded-md bg-[#00AEC7] p-2 font-bold text-white transition-colors duration-[0.2s] hover:bg-[#63daec]"
             >
+              Adicionar
               <FaPlusCircle size={20} />
             </button>
           </div>
