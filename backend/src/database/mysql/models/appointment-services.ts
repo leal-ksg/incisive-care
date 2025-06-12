@@ -7,10 +7,12 @@ export const defineAppointmentServiceModel = (sequelize: Sequelize) => {
       appointmentId: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true,
       },
       serviceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
       },
     },
     {
